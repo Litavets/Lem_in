@@ -15,12 +15,40 @@
 
 # include "./libft/includes/libft.h"
 
-typedef struct 			s_lemin
+
+typedef struct 			s_adjlist
 {
-	size_t				ants;
+	int						dest;
+	struct s_adjlist		*next;
+}							t_adjlist;
 
-}						t_lemin;
+typedef struct 				s_room
+{
+	char					*name;
+	int						num;
+	int						*xy;
+	enum {no, start, end}	flag;
+	char					ant;
+	struct s_adjlist		*adjlist;
+	struct s_room			*next;
+}							t_room;
 
-void					error(char *str);
+/*
+**	doors[0] - start; [1] - end;
+*/
+typedef struct 				s_lemin
+{
+	size_t					ants;
+	size_t					nrooms;
+	char					doors[2];
+	t_room					*rooms;
+
+}							t_lemin;
+
+void						error(char *str);
+void						del_arr(char **arr);
+
+//	DEBUG
+void						print_rooms_list(t_room *rooms);
 
 #endif

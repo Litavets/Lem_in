@@ -15,7 +15,8 @@ CC = gcc
 FLAGS = -g -Wall -Wextra -Werror
 HEAD = ./lem_in.h
 SRC =	main.c \
-		freexit.c
+		freexit.c \
+		debug.c
 
 OBJS = $(SRC:.c=.o)
 LIBFT = libft/libft.a

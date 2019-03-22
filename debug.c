@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freexit.c                                          :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dstepane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/21 20:35:45 by dstepane          #+#    #+#             */
-/*   Updated: 2019/03/21 20:35:46 by dstepane         ###   ########.fr       */
+/*   Created: 2019/03/22 21:49:58 by dstepane          #+#    #+#             */
+/*   Updated: 2019/03/22 21:49:59 by dstepane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		error(char *str)
+void		print_rooms_list(t_room *rooms)
 {
-	ft_putendl(str);
-	exit(0);
-}
+	t_room *cur;
 
-void			del_arr(char **arr)
-{
-	int		i;
-
-	i = 0;
-	if (arr)
+	cur = rooms;
+	while (cur)
 	{
-		while (arr[i])
-			free(arr[i++]);
-		ft_memdel((void **)&arr);
+		printf("==============================\n");
+		printf(">> cur->name: %s\n", cur->name);
+		printf(">> cur->num: %d\n", cur->num);
+		printf(">> cur->x: %d y: %d\n", cur->xy[0], cur->xy[1]);
+		printf(">> cur->flag: %d\n", cur->flag);
+		printf(">> cur->ant: %d\n", cur->ant);
+		cur = cur->next;
 	}
 }
