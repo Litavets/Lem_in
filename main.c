@@ -90,17 +90,16 @@ char		*get_room_name(char *line)
 	return(name);
 }
 
-int		*get_room_coord(char *line)
+void		get_room_coord(t_room *new, char *line)
 {
 	int		*xy;
 	char	**split;
 
 	xy = (int *)malloc(sizeof(int) * 2);
 	split = ft_strsplit(line, ' ');
-	xy[0] = ft_atoi(split[1]);
-	xy[1] = ft_atoi(split[2]);
+	new->x = ft_atoi(split[1]);
+	new->y = ft_atoi(split[2]);
 	del_arr(split);
-	return(xy);
 }
 
 t_room		*newroom(char *line, int flag)
@@ -112,17 +111,12 @@ t_room		*newroom(char *line, int flag)
 	new->name = get_room_name(line);
 //		printf(">> new->name: %s\n", new->name);
 	new->num = num++;
-	new->xy = get_room_coord(line);
+	get_room_coord(new, line);
 //		printf(">> new->x: %d y: %d\n", new->xy[0], new->xy[1]);
-	if (flag == 0)
-		new->flag = no;
-	else if (flag == 1)
-		new->flag = start;
-	else if (flag == 2)
-		new->flag = end;
+		new->flag = flag;
 //		printf(">> new->flag: %d\n", new->flag);
 	new->ant = 0;
-	new->adjlist = NULL;
+	new->adj = NULL;
 	new->next = NULL;
 	return(new);
 }
@@ -151,7 +145,10 @@ void		parse_comment(t_lemin *l, char *line)
 		ft_strdel(&line);
 		get_next_line(0, &line);
 		if (validate_room(line))
+		{
+			l->doors[0] = 1;
 			addroom(l, line, 1);
+		}
 		else
 			error("Invalid room parameters input.");
 	}
@@ -161,15 +158,88 @@ void		parse_comment(t_lemin *l, char *line)
 		ft_strdel(&line);
 		get_next_line(0, &line);
 		if (validate_room(line))
+		{
+			l->doors[1] = 1;
 			addroom(l, line, 2);
+		}
 		else
 			error("Invalid room parameters input.");
 	}
 }
 
+int			get_room_num(t_lemin *l, char *dest)
+{
+	t_room		*cur;
+
+	cur = l->rooms;
+	while (cur)
+	{
+		if (!ft_strcmp(dest, cur->name))
+			return (cur->num);
+		cur = cur->next;
+	}
+	return (-1);
+}
+
+void		add_to_adjlist(t_lemin *l, t_room *cur, char *dest)
+{
+	t_adjlist	*adj;
+	t_adjlist	*newadj;
+
+	newadj = (t_adjlist *)malloc(sizeof(t_adjlist));
+	adj = cur->adj;
+	newadj->next = NULL;
+	newadj->dest = ft_strdup(dest);
+		printf(">> adj->dest: %s\n", newadj->dest); //
+	newadj->dst = get_room_num(l, newadj->dest);
+		printf(">> adj->dst: %d\n", newadj->dst);
+	if (cur->adj == NULL)
+		cur->adj = newadj;
+	else
+	{
+		while (adj->next)
+			adj = adj->next;
+		adj->next = newadj;
+	}
+
+}
+
+void		addlink(t_lemin *l, char *line)
+{
+	char		**split;
+	t_room		*cur;
+
+		printf("We're adding link, yo! %s\n", line);  //
+	split = ft_strsplit(line, '-');
+	cur = l->rooms;
+	while (cur)
+	{
+		if (!ft_strcmp(cur->name, split[0]))
+		{
+			add_to_adjlist(l, cur, split[1]);
+			break ;
+		}
+		cur = cur->next;
+	}
+	del_arr(split);
+}
+
+int			validate_link(char *line)
+{
+	char	**split;
+
+	if (!ft_strchr(line, '-') || ft_strchr(line, ' ') || ft_strchr(line, '	'))
+		return (0);
+	split = ft_strsplit(line, '-');
+	if (split[2] != NULL)
+		return (0);
+	del_arr(split);
+	return (1);
+}
+
 int			main(void)
 {
-//		FILE 	*fp = freopen("./sub1a", "r", stdin);  //
+		FILE 	*fp = freopen("./sub1a", "r", stdin);  //
 	
 	char		*line;
 	t_lemin		*l;
@@ -182,13 +252,17 @@ int			main(void)
 			parse_comment(l, line);
 		else if (validate_room(line))
 			addroom(l, line, 0);
+		else if (validate_link(line))
+			addlink(l, line);
+		else if (*line)
+			error("Invalid input.");
 		ft_putendl(line);
 		ft_strdel(&line);
 	}
-		printf(">> ants: %zd\n", l->ants);   //
-		print_rooms_list(l->rooms);
+		print_struct_lemin(l); //
+		print_rooms_list(l->rooms); //
 	free(l);
-//		fclose(fp);  //
+		fclose(fp);  //
 
 //	printf("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 //	system("leaks -q lem-in");

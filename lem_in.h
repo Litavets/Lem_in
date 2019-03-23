@@ -16,9 +16,10 @@
 # include "./libft/includes/libft.h"
 
 
-typedef struct 			s_adjlist
+typedef struct 				s_adjlist
 {
-	int						dest;
+	int						dst;
+	char					*dest;
 	struct s_adjlist		*next;
 }							t_adjlist;
 
@@ -26,10 +27,11 @@ typedef struct 				s_room
 {
 	char					*name;
 	int						num;
-	int						*xy;
+	int						x;
+	int						y;
 	enum {no, start, end}	flag;
 	char					ant;
-	struct s_adjlist		*adjlist;
+	struct s_adjlist		*adj;
 	struct s_room			*next;
 }							t_room;
 
@@ -50,5 +52,6 @@ void						del_arr(char **arr);
 
 //	DEBUG
 void						print_rooms_list(t_room *rooms);
+void						print_struct_lemin(t_lemin *l);
 
 #endif
