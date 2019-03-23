@@ -15,6 +15,8 @@
 void		error(char *str)
 {
 	ft_putendl(str);
+//	printf("\n+++++++++++++++++++++++++++++++EXIT+++++++++++++++++++++++++++++++++++++++++++\n");
+//	system("leaks -q lem-in");
 	exit(0);
 }
 

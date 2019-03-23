@@ -32,7 +32,7 @@ static void		get_room_coord(t_room *new, char *line)
 	del_arr(split);
 }
 
-static t_room		*newroom(char *line, int flag)
+static t_room		*newroom(t_lemin *l, char *line, int flag)
 {
 	t_room		*new;
 	static int	num = 0;
@@ -45,7 +45,7 @@ static t_room		*newroom(char *line, int flag)
 //		printf(">> new->x: %d y: %d\n", new->xy[0], new->xy[1]);
 		new->flag = flag;
 //		printf(">> new->flag: %d\n", new->flag);
-	new->ant = 0;
+	new->ant = (flag == 1) ? l->ants : 0;
 	new->adj = NULL;
 	new->next = NULL;
 	return(new);
@@ -57,13 +57,13 @@ void		addroom(t_lemin *l, char *line, int flag)
 	
 //		printf("We're adding room[%d]: %s\n", flag, line);  //
 	if (l->rooms == NULL)
-		l->rooms = newroom(line, flag);
+		l->rooms = newroom(l, line, flag);
 	else 
 	{
 		room = l->rooms;
 		while (room->next)
 			room = room->next;
-		room->next = newroom(line, flag);
+		room->next = newroom(l, line, flag);
 	}
 }
 

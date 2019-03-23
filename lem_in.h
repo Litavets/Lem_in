@@ -40,7 +40,7 @@ typedef struct 				s_room
 typedef struct 				s_lemin
 {
 	size_t					ants;
-	size_t					nrooms;
+	size_t					nrooms;		//currently unused
 	char					doors[2];
 	t_room					*rooms;
 

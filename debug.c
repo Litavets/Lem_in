@@ -16,7 +16,7 @@ void		print_adjlist(t_adjlist *adj)
 {
 	while (adj)
 	{
-		printf("[%s|%d]-", adj->dest, adj->dst);
+		printf("{%s|%d]-", adj->dest, adj->dst);
 		adj = adj->next;
 	}
 	printf("\n");
@@ -30,11 +30,11 @@ void		print_rooms_list(t_room *rooms)
 	while (cur)
 	{
 		printf("==============================\n");
-		printf(">> cur->name: %s\n", cur->name);
-		printf(">> cur->num: %d\n", cur->num);
-		printf(">> cur->x: %d y: %d\n", cur->x, cur->y);
-		printf(">> cur->flag: %d\n", cur->flag);
-		printf(">> cur->ant: %d\n", cur->ant);
+		printf("name: {%s}\n", cur->name);
+		printf("num : [%d]\n", cur->num);
+//		printf(">> x:%d y:%d\n", cur->x, cur->y);
+		printf(">> flag: %d\n", cur->flag);
+		printf(">> ant : %d\n", cur->ant);
 		print_adjlist(cur->adj);
 		cur = cur->next;
 	}
@@ -42,7 +42,7 @@ void		print_rooms_list(t_room *rooms)
 
 void		print_struct_lemin(t_lemin *l)
 {
-	printf("☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎\n");
+	printf("\n☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎\n");
 	printf(">> l->ants: %zd\n", l->ants);
 	printf(">> l->nrooms: %zd\n", l->nrooms);
 	printf(">> l->doors: start:%d end:%d\n", l->doors[0], l->doors[1]);
