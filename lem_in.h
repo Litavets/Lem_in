@@ -15,7 +15,6 @@
 
 # include "./libft/includes/libft.h"
 
-
 typedef struct 				s_adjlist
 {
 	int						dst;
@@ -47,9 +46,14 @@ typedef struct 				s_lemin
 
 }							t_lemin;
 
+int							validate_room(char *line);
+void						addroom(t_lemin *l, char *line, int flag);
+int							validate_link(char *line);
+void						addlink(t_lemin *l, char *line);
+
 void						error(char *str);
 void						del_arr(char **arr);
-
+void						clean_rooms(t_lemin *l);
 //	DEBUG
 void						print_rooms_list(t_room *rooms);
 void						print_struct_lemin(t_lemin *l);

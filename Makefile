@@ -15,6 +15,8 @@ CC = gcc
 FLAGS = -g -Wall -Wextra -Werror
 HEAD = ./lem_in.h
 SRC =	main.c \
+		rooms_list.c \
+		adj_list.c \
 		freexit.c \
 		debug.c
 
