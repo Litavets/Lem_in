@@ -19,6 +19,7 @@ typedef struct 				s_adjlist
 {
 	int						dst;
 	char					*dest;
+	struct s_room			*link;
 	struct s_adjlist		*next;
 }							t_adjlist;
 
@@ -30,26 +31,32 @@ typedef struct 				s_room
 	int						y;
 	enum {no, start, end}	flag;
 	char					ant;
+	int						fire;
+	int						count;
+	struct s_room			*from;
 	struct s_adjlist		*adj;
 	struct s_room			*next;
 }							t_room;
 
-/*
-**	doors[0] - start; [1] - end;
-*/
 typedef struct 				s_lemin
 {
 	size_t					ants;
-	size_t					nrooms;		//currently unused
-	char					doors[2];
+	size_t					nrooms;
 	t_room					*rooms;
-
+	t_room					*start;
+	t_room					*end;
+	t_room					**q;
 }							t_lemin;
 
 int							validate_room(char *line);
 void						addroom(t_lemin *l, char *line, int flag);
 int							validate_link(char *line);
 void						addlink(t_lemin *l, char *line);
+
+void						count_rooms(t_lemin *l);
+void						link_adjlist(t_lemin *l);
+
+void						bfs(t_lemin *l);
 
 void						error(char *str);
 void						del_arr(char **arr);

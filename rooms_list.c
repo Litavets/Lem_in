@@ -12,6 +12,21 @@
 
 #include "lem_in.h"
 
+void			count_rooms(t_lemin *l)
+{
+	int			how_many_rooms_we_are_going_to_burn;
+	t_room		*cur;
+
+	how_many_rooms_we_are_going_to_burn = 0;
+	cur = l->rooms;
+	while (cur)
+	{
+		cur = cur->next;
+		how_many_rooms_we_are_going_to_burn++;
+	}
+	l->nrooms = how_many_rooms_we_are_going_to_burn;
+}
+
 static char		*get_room_name(char *line)
 {
 	char	*ptr;
@@ -46,7 +61,14 @@ static t_room		*newroom(t_lemin *l, char *line, int flag)
 		new->flag = flag;
 //		printf(">> new->flag: %d\n", new->flag);
 	new->ant = (flag == 1) ? l->ants : 0;
+	if (flag == 1)
+		l->start = new;
+	else if (flag == 2)
+		l->end = new;
 	new->adj = NULL;
+	new->fire = 0;
+	new->count = 0;
+	new->from = NULL;
 	new->next = NULL;
 	return(new);
 }

@@ -38,6 +38,7 @@ static void		add_to_adjlist(t_lemin *l, t_room *cur, char *dest)
 //		printf(">> adj->dest: %s\n", newadj->dest); //
 	newadj->dst = get_room_num(l, newadj->dest);
 //		printf(">> adj->dst: %d\n", newadj->dst);
+	newadj->link = NULL;
 	if (cur->adj == NULL)
 		cur->adj = newadj;
 	else
