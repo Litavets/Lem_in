@@ -12,6 +12,50 @@
 
 #include "lem_in.h"
 
+void		print_paths(t_lemin *l)
+{
+	size_t		y = 0, x = 1;
+	t_room		*cur;
+
+	printf("\n*************************************************\n");
+	while (l->paths[y] && l->paths[y][0] != -1)
+	{
+		while (l->paths[y][x]!= -1)
+		{
+			cur = l->rooms;
+			while (cur)
+			{
+				if (cur->num == l->paths[y][x]) 
+				printf("{%s|%d]-->", cur->name, cur->num);
+				cur = cur->next;
+			}
+			x++;
+		}
+		x = 1;
+		y++;
+		printf("\n");
+	}
+	printf("*************************************************\n");
+}
+
+void		print_paths_nums(t_lemin *l)
+{
+	size_t		y = 0, x = 0;
+
+	printf("\n.................................................\n");
+	while (l->paths[y])
+	{
+		while (x < l->nrooms)
+		{
+			printf(" % d|", l->paths[y][x]);
+			x++;
+		}
+		printf("\n");
+		x = 0;
+		y++;
+	}
+}
+
 void		print_adjlist(t_adjlist *adj)
 {
 	while (adj)
@@ -25,7 +69,7 @@ void		print_adjlist(t_adjlist *adj)
 
 void		print_rooms_list(t_room *rooms)
 {
-	t_room *cur;
+	t_room		*cur;
 
 	cur = rooms;
 	while (cur)
@@ -47,7 +91,7 @@ void		print_rooms_list(t_room *rooms)
 
 void		print_struct_lemin(t_lemin *l)
 {
-	printf("\n☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎\n");
+	printf("\n\n☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎☀︎\n");
 	printf(">> l->ants: %zd\n", l->ants);
 	printf(">> l->nrooms: %zd\n", l->nrooms);
 	if (l->start->name)

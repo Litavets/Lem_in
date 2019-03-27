@@ -19,6 +19,7 @@ SRC =	main.c \
 		adj_list.c \
 		freexit.c \
 		bfs.c \
+		ants_gogogo.c \
 		debug.c
 
 OBJS = $(SRC:.c=.o)

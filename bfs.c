@@ -12,7 +12,6 @@
 
 #include "lem_in.h"
 
-
 t_room		*get_link(t_lemin *l, int rnum)
 {
 	t_room		*cur;
@@ -57,17 +56,89 @@ int			is_in_q(t_room **q, t_room *r)
 	return (0);
 }
 
+void		create_paths_arr_and_q(t_lemin *l)
+{
+	size_t		y;
+	size_t		x;
+	size_t		ways;
+
+		if (!(l->q = (t_room **)malloc(sizeof(t_room *) * l->nrooms + 1)))		//NEED TO FREE!!!
+			return ;
+		y = 0;
+		while (y < l->nrooms + 1)
+			l->q[y++] = NULL;
+	ways = (l->start->count >= l->end->count) ? l->start->count : l->end->count;
+	if (!(l->paths = (int **)malloc(sizeof(int *) * ways + 1)))  // FREEEEEEE
+		return ; 			
+	y = 0;
+	while (y < ways)
+	{
+		l->paths[y] = (int *)malloc(sizeof(int *) * l->nrooms + 1);  // FREEEEEEE
+		while (x < l->nrooms + 1)
+		{
+			l->paths[y][x] = -1;
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+	l->paths[y] = NULL;
+}
+
+void		save_path(t_lemin *l)
+{
+	t_room		*cur;
+	size_t		y;
+	size_t		x;
+
+	cur = l->end;
+	x = 0;
+		printf("\n\n±±±±±±±±±±±\n");  //
+	while (cur)
+	{
+			printf("///{%s|%d]", cur->name, cur->num); //
+		x++;
+		cur = cur->from;
+	}
+		printf("\n±±±±±±±±±±±\n");  //
+	cur = l->end;
+	y = 0;
+	while (l->paths[y] && l->paths[y][0] != -1)
+		y++;
+	while (cur)
+	{
+		l->paths[y][x--] = cur->num;
+		l->paths[y][0]++;
+		cur->fire = -1;
+		cur = cur->from;
+	}
+}
+
+void		reset_bfs(t_lemin *l)
+{
+	size_t		i;
+	t_room		*cur;
+
+	i = 0;
+	while (i < l->nrooms)
+		l->q[i++] = NULL;
+	cur = l->rooms;
+	while (cur)
+	{
+		if (cur->fire != -1)
+			cur->fire = 0;
+		cur = cur->next;
+	}
+	l->start->fire = 0;
+	l->end->fire = 0;
+}
+
 void		bfs(t_lemin *l)
 {
 	size_t		i;
 	size_t		j;
 	t_adjlist	*adj;
 
-	if (!(l->q = (t_room **)malloc(sizeof(t_room *) * l->nrooms)))
-		return ;
-	i = 0;
-	while (i < l->nrooms)
-		l->q[i++] = NULL;
 	i = 0;
 	j = 0;
 	l->q[0] = l->start;
@@ -76,32 +147,31 @@ void		bfs(t_lemin *l)
 		adj = l->q[j]->adj;
 		while (adj)
 		{
-			if (!is_in_q(l->q, adj->link) && !adj->link->fire)
+			if (!adj->link->fire && !is_in_q(l->q, adj->link))
 			{
 				l->q[++i] = adj->link;
-					printf("->{%s|%d]", l->q[i]->name, l->q[i]->num);
+				l->q[i]->from = l->q[j];
 			}
 			adj = adj->next;
 		}
 
-//		for (int j = 0; j < cur->count; j++)
-/*		int j = 0;
-		while (l->q[j])
-		{
-			printf(">>>>cur{%s|%d] = {%s|%d]\n", cur->name, cur->num, l->q[j]->name, l->q[j]->num);
-			j++;
-		}
-*/
 		l->q[j]->fire = 1;
-		l->q[j] = NULL;
+		if (l->q[j]->flag == end)
+			break;
 		j++;
 	}
-/*
-		int j = 0;
-		while (l->q[j])
-		{
-			printf("->{%s|%d]", l->q[j]->name, l->q[j]->num);
-			j++;
-		}
-*/
+	printf("\n_____\nQUEUE: ");
+	for (int z = 0; l->q[z] != NULL; z++)
+		printf("->{%s|%d]", l->q[z]->name, l->q[z]->num);	//
+	if (l->q[j] && l->q[j]->flag == end)
+	{
+			save_path(l);
+			reset_bfs(l);
+			bfs(l);
+	}
+	else if (l->paths[0][1] == -1)
+		error("ERROR: There's no path from start to end.");
+	else 
+		return ;
+
 }

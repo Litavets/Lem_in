@@ -77,6 +77,7 @@ t_lemin		*init_lemin(void)
 	l->start = NULL;
 	l->end = NULL;
 	l->q = NULL;
+	l->paths = NULL;
 	return(l);
 }
 
@@ -109,9 +110,13 @@ int			main(void)
 		error("ERROR: No start or end room.");
 	count_rooms(l);
 	link_adjlist(l);
+	create_paths_arr_and_q(l);
 	bfs(l);
 		print_struct_lemin(l); //
 		print_rooms_list(l->rooms); //
+		print_paths_nums(l);  //
+		print_paths(l);
+	ants_gogogo(l);
 	clean_rooms(l);
 		fclose(fp);  //
 

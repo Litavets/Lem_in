@@ -61,10 +61,9 @@ void		addlink(t_lemin *l, char *line)
 	while (cur)
 	{
 		if (!ft_strcmp(cur->name, split[0]))
-		{
 			add_to_adjlist(l, cur, split[1]);
-			break ;
-		}
+		else if (!ft_strcmp(cur->name, split[1]))
+			add_to_adjlist(l, cur, split[0]);
 		cur = cur->next;
 	}
 	del_arr(split);
