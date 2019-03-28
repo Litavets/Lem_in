@@ -30,7 +30,7 @@ typedef struct 				s_room
 	int						x;
 	int						y;
 	enum {no, start, end}	flag;
-	char					ant;
+	uintmax_t				ant;
 	int						fire;
 	int						count;
 	struct s_room			*from;
@@ -40,14 +40,24 @@ typedef struct 				s_room
 
 typedef struct 				s_lemin
 {
-	size_t					ants;
-	size_t					nrooms;
+	uintmax_t				ants;
+	uintmax_t				nrooms;
 	t_room					*rooms;
 	t_room					*start;
 	t_room					*end;
 	t_room					**q;
 	int						**paths;
 }							t_lemin;
+
+typedef struct 				s_ants
+{
+	uintmax_t				ant;
+	int						y;
+	int						x;
+	t_room					*in;
+	struct s_ants			*next;
+}							t_ants;
+
 
 int							validate_room(char *line);
 void						addroom(t_lemin *l, char *line, int flag);
@@ -58,6 +68,7 @@ void						count_rooms(t_lemin *l);
 void						link_adjlist(t_lemin *l);
 void						create_paths_arr_and_q(t_lemin *l);
 void						bfs(t_lemin *l);
+t_ants						*make_ants_list(t_lemin *l);
 void						ants_gogogo(t_lemin *l);
 
 void						error(char *str);
@@ -68,5 +79,6 @@ void						print_rooms_list(t_room *rooms);
 void						print_struct_lemin(t_lemin *l);
 void						print_paths_nums(t_lemin *l);
 void						print_paths(t_lemin *l);
+void						print_ants(t_ants	*a);
 
 #endif

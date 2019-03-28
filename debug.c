@@ -12,6 +12,22 @@
 
 #include "lem_in.h"
 
+void		print_ants(t_ants	*a)
+{
+	t_ants		*cur;
+
+	printf("\n:::::::::::::::::::::::::::::::::\n");
+	cur = a;
+	while (cur)
+	{
+		printf("(%lu) ", cur->ant);
+		printf("y:%d x:%d", cur->y, cur->x);
+		printf("\n");
+		cur = cur->next;
+	}
+	printf("\n:::::::::::::::::::::::::::::::::\n");
+}
+
 void		print_paths(t_lemin *l)
 {
 	size_t		y = 0, x = 1;
@@ -79,7 +95,7 @@ void		print_rooms_list(t_room *rooms)
 		printf("num : [%d]\n", cur->num);
 		printf(">> x:%d y:%d\n", cur->x, cur->y);
 		printf(">> flag: %d\n", cur->flag);
-		printf(">> ant: %d\n", cur->ant);
+		printf(">> ant: %ju\n", cur->ant);
 		printf(">> fire: %d\n", cur->fire);
 		printf(">> count: %d\n", cur->count);
 		if (cur->from)
