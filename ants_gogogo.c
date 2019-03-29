@@ -67,9 +67,9 @@ void		print_move(t_lemin *l, t_ants *a, char c)
 
 	name = get_room_name(l, l->paths[a->y][a->x]);
 	if (c == 'S')
-		ft_printf("{green}L{b}%ld{0}{green}-{b}%s{0}{-} ", a->ant, name);
+		ft_printf("{green}{b}L%ld-%s{0}{-} ", a->ant, name);
 	else if (c == 'F')
-		ft_printf("{magenta}L{b}%ld{0}{magenta}-{b}%s{0}{-} ", a->ant, name);
+		ft_printf("{magenta}{b}L%ld-%s{0}{-} ", a->ant, name);
 	else
 		ft_printf("{yellow}L%ld{yellow}-%s{-} ", a->ant, name);
 	
@@ -158,10 +158,11 @@ void		ants_gogogo(t_lemin *l)
 		ft_putchar('\n');
 		l->move_count++;
 	}
+	ft_printf("\n{red}>> MOVES COUNT: {b}%lu{-}{0}\n", l->move_count);
 
-		print_ants(a);			//
-			printf(">> Start_ants: %lu, End_ants: %lu\n", l->start->ant, l->end->ant);		//
-			ft_printf("{red}>> MOVES COUNT: {b}%lu{-}{0}\n", l->move_count);		//
+//		print_ants(a);			//
+//		printf(">> Start_ants: %lu, End_ants: %lu\n", l->start->ant, l->end->ant);		//
+
 }
 
 

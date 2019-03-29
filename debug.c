@@ -33,16 +33,24 @@ void		print_paths(t_lemin *l)
 	size_t		y = 0, x = 1;
 	t_room		*cur;
 
-	printf("\n*************************************************\n");
+	printf("\n🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜\n");
 	while (l->paths[y] && l->paths[y][1] != -1)
 	{
+		ft_printf("{b}{I}{cyan}(%lu)>>{0}{-} ", y + 1);
 		while (l->paths[y][x] != -1)
 		{
 			cur = l->rooms;
 			while (cur)
 			{
-				if (cur->num == l->paths[y][x]) 
-				printf("{%s|%d]-->", cur->name, cur->num);
+				if (cur->num == l->paths[y][x])
+				{
+					if (cur->num == l->start->num)
+						ft_printf("{b}{green}[%d/%s}-->{-}{0}", cur->num, cur->name);
+					else if (cur->num == l->end->num)
+						ft_printf("{b}{magenta}[%d/%s}{-}{0}", cur->num, cur->name);
+					else
+						ft_printf("{yellow}[%d/%s}-->{-}", cur->num, cur->name);
+				}
 				cur = cur->next;
 			}
 			x++;
@@ -51,7 +59,7 @@ void		print_paths(t_lemin *l)
 		y++;
 		printf("\n");
 	}
-	printf("*************************************************\n");
+	printf("🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜\n\n");
 }
 
 void		print_paths_nums(t_lemin *l)

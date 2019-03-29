@@ -84,7 +84,7 @@ t_lemin		*init_lemin(void)
 
 int			main(void)
 {
-//		FILE 	*fp = freopen("./test", "r", stdin);  //
+		FILE 	*fp = freopen("./test", "r", stdin);  //
 	
 	char		*line;
 	t_lemin		*l;
@@ -113,13 +113,13 @@ int			main(void)
 	link_adjlist(l);
 	create_paths_arr_and_q(l);
 	bfs(l);
-//		print_struct_lemin(l); //
-//		print_rooms_list(l->rooms); //
-//		print_paths_nums(l);  //
-//		print_paths(l);
+		print_struct_lemin(l); //
+		print_rooms_list(l->rooms); //
+		print_paths_nums(l);  //
+		print_paths(l);
 	ants_gogogo(l);
 	clean_rooms(l);
-//		fclose(fp);  //
+		fclose(fp);  //
 
 //	printf("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 //	system("leaks -q lem-in");

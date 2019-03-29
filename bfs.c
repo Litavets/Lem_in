@@ -96,7 +96,7 @@ void		save_path(t_lemin *l)
 		printf("\n\n±±±±±±±±±±±\n");  //
 	while (cur)
 	{
-			printf("///{%s|%d]", cur->name, cur->num); //
+				printf("///{%s|%d]", cur->name, cur->num); //
 		x++;
 		cur = cur->from;
 	}
@@ -160,9 +160,9 @@ void		bfs(t_lemin *l)
 			break;
 		j++;
 	}
-	printf("\n_____\nQUEUE: ");
-	for (int z = 0; l->q[z] != NULL; z++)
-		printf("->{%s|%d]", l->q[z]->name, l->q[z]->num);	//
+		printf("\n_____\nQUEUE: ");
+		for (int z = 0; l->q[z] != NULL; z++)
+			printf("->{%s|%d]", l->q[z]->name, l->q[z]->num);	//
 	if (l->q[j] && l->q[j]->flag == end)
 	{
 			save_path(l);
@@ -173,5 +173,4 @@ void		bfs(t_lemin *l)
 		error("ERROR: There's no path from start to end.");
 	else 
 		return ;
-
 }
