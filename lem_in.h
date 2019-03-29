@@ -47,6 +47,7 @@ typedef struct 				s_lemin
 	t_room					*end;
 	t_room					**q;
 	int						**paths;
+	intmax_t				move_count;
 }							t_lemin;
 
 typedef struct 				s_ants

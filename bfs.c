@@ -73,8 +73,8 @@ void		create_paths_arr_and_q(t_lemin *l)
 	y = 0;
 	while (y < ways)
 	{
-		l->paths[y] = (int *)malloc(sizeof(int *) * l->nrooms + 1);  // FREEEEEEE
-		while (x < l->nrooms + 1)
+		l->paths[y] = (int *)malloc(sizeof(int *) * l->nrooms + 2);  // FREEEEEEE
+		while (x < l->nrooms + 2)
 		{
 			l->paths[y][x] = -1;
 			x++;

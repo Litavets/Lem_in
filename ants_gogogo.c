@@ -58,46 +58,88 @@ char		*get_room_name(t_lemin *l, int num)
 	return (NULL);
 }
 
-void		print_move(t_lemin *l, t_ants *a)
+/*
+**	char c == [S - start, F - Finsih, M - Midway]
+*/
+void		print_move(t_lemin *l, t_ants *a, char c)
 {
 	char	*name;
 
 	name = get_room_name(l, l->paths[a->y][a->x]);
-	ft_printf("L%ld-%s ", a->ant, name);
+	if (c == 'S')
+		ft_printf("{green}L{b}%ld{0}{green}-{b}%s{0}{-} ", a->ant, name);
+	else if (c == 'F')
+		ft_printf("{magenta}L{b}%ld{0}{magenta}-{b}%s{0}{-} ", a->ant, name);
+	else
+		ft_printf("{yellow}L%ld{yellow}-%s{-} ", a->ant, name);
+	
 }
 
-int			is_good_way(t_lemin *l, t_ants *a, int y)
+int			is_good_way(t_lemin *l, int y)
 {
+	int			y1;
+	uintmax_t	moves;
+	
+	if (y == 0)
+		return (1);
+	y1 = y - 1;
+	moves = 0;
+	while (y1 >= 0)
+	{
+		moves += l->paths[y][0] - l->paths[y1][0];
+		y1--;
+	}
+//		printf("\n> moves: %ju\n", moves);
+	if (l->start->ant > moves)
+		return (1);
+	else 
+		return (0); 
+}
 
-	l = NULL;
-	a = NULL;
-	y = 0;
-
-	return (1);
+void			move_along(t_lemin *l, t_ants *a)
+{
+	while (a && a->y != -1)
+	{
+		while (a->y == -2)
+			a = a->next;
+		a->x++;
+		if (!l->paths[a->y][a->x + 1] || l->paths[a->y][a->x + 1] == -1)
+		{
+			print_move(l, a, 'F');
+			a->y = -2;
+			l->end->ant++;
+		}
+		else
+			print_move(l, a, 'M');
+		a = a->next;
+	}
 }
 
 void			move_from_start(t_lemin *l, t_ants *a)
 {
-	int		y = 0;
-	int				ways;
+	int		y;
+	int		ways;
+	int		moved;
 	
 	ways = 0;
-	while (l->paths[ways])
+	while (l->paths[ways] && l->paths[ways][1] != -1)
 			ways++;
 	while (a->next && a->y != -1)
 			a = a->next;
-	while (y < ways && a)
+	moved = 0;
+	y = 0;
+	while (y < ways && moved < ways && a && l->start->ant)
 	{
-		if (is_good_way(l, a, y))
+		if (is_good_way(l, y))
 		{
 			a->y = y;
 			a->x++;
-			print_move(l, a);
+			print_move(l, a, 'S');
+			moved++;
 			l->start->ant--;
 			a = a->next;
 		}
 		y++;
-//		y = l->paths[y + 1] ? ++y : 0;
 	}
 
 }
@@ -110,11 +152,16 @@ void		ants_gogogo(t_lemin *l)
 //		print_ants(a);			//
 	while (l->end->ant < l->ants)
 	{
-		move_from_start(l, a);
-		l->end->ant++;
+		move_along(l, a);
+		if (l->start->ant > 0)
+			move_from_start(l, a);
+		ft_putchar('\n');
+		l->move_count++;
 	}
 
 		print_ants(a);			//
+			printf(">> Start_ants: %lu, End_ants: %lu\n", l->start->ant, l->end->ant);		//
+			ft_printf("{red}>> MOVES COUNT: {b}%lu{-}{0}\n", l->move_count);		//
 }
 
 

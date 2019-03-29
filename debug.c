@@ -34,9 +34,9 @@ void		print_paths(t_lemin *l)
 	t_room		*cur;
 
 	printf("\n*************************************************\n");
-	while (l->paths[y] && l->paths[y][0] != -1)
+	while (l->paths[y] && l->paths[y][1] != -1)
 	{
-		while (l->paths[y][x]!= -1)
+		while (l->paths[y][x] != -1)
 		{
 			cur = l->rooms;
 			while (cur)
