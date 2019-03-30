@@ -14,14 +14,13 @@
 
 t_ants		*new_ant(void)
 {
-	t_ants		*new;
-	static int	num = 0;
+	t_ants				*new;
+	static uintmax_t	num = 0;
 
 	new = (t_ants *)malloc(sizeof(t_ants));
 	new->ant = ++num;
 	new->y = -1;
 	new->x = 1;
-	new->in = NULL;
 	new->next = NULL;
 	return (new);
 }
@@ -123,9 +122,9 @@ void			move_from_start(t_lemin *l, t_ants *a)
 	
 	ways = 0;
 	while (l->paths[ways] && l->paths[ways][1] != -1)
-			ways++;
-	while (a->next && a->y != -1)
-			a = a->next;
+		ways++;
+	while (a->next && (a->y == -2 || a->y > -1))
+		a = a->next;
 	moved = 0;
 	y = 0;
 	while (y < ways && moved < ways && a && l->start->ant)
@@ -134,9 +133,17 @@ void			move_from_start(t_lemin *l, t_ants *a)
 		{
 			a->y = y;
 			a->x++;
-			print_move(l, a, 'S');
+			if (l->paths[a->y][a->x] == l->end->num)
+			{
+				print_move(l, a, 'F');
+				a->y = -2;
+				l->end->ant++;
+			}
+			else
+				print_move(l, a, 'S');
 			moved++;
 			l->start->ant--;
+
 			a = a->next;
 		}
 		y++;
@@ -150,15 +157,18 @@ void		ants_gogogo(t_lemin *l)
 	
 	a = make_ants_list(l);
 //		print_ants(a);			//
+	ft_putchar('\n');
 	while (l->end->ant < l->ants)
 	{
-		move_along(l, a);
+		if (l->nrooms > 2)
+			move_along(l, a);
 		if (l->start->ant > 0)
 			move_from_start(l, a);
 		ft_putchar('\n');
 		l->move_count++;
 	}
-	ft_printf("\n{red}>> MOVES COUNT: {b}%lu{-}{0}\n", l->move_count);
+//	ft_printf("\n{red}>> MOVES COUNT: {b}%lu{-}{0}\n", l->move_count);
+	kill_all_the_ants(a);
 
 //		print_ants(a);			//
 //		printf(">> Start_ants: %lu, End_ants: %lu\n", l->start->ant, l->end->ant);		//

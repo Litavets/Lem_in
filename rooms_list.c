@@ -89,7 +89,23 @@ void		addroom(t_lemin *l, char *line, int flag)
 	}
 }
 
-int			validate_room(char *line)
+void		check_duplicates(t_lemin *l, char *line)
+{
+	t_room		*r;
+	char		**split;
+
+	split = ft_strsplit(line, ' ');
+	r = l->rooms;
+	while (r)
+	{
+		if (!ft_strcmp(split[0], r->name))
+			error("ERROR: There are rooms with the same name.");
+		r = r->next;
+	}
+	del_arr(split);
+}
+
+int			validate_room(t_lemin *l, char *line)
 {
 	int		i;
 	int		j;
@@ -111,5 +127,6 @@ int			validate_room(char *line)
 		;
 	if (i == j + 1 || line[i] != '\0')
 		return (0);
+	check_duplicates(l, line);
 	return (1);
 }

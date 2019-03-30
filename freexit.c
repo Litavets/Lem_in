@@ -14,9 +14,10 @@
 
 void		error(char *str)
 {
-	ft_putendl(str);
-//	printf("\n+++++++++++++++++++++++++++++++EXIT+++++++++++++++++++++++++++++++++++++++++++\n");
-//	system("leaks -q lem-in");
+	ft_printf("{red}{b}%s{0}\n", str);
+//	ft_putendl(str);
+//		printf("\n+++++++++++++++++++++++++++++++EXIT+++++++++++++++++++++++++++++++++++++++++++\n");
+//		system("leaks -q lem-in");
 	exit(0);
 }
 
@@ -31,6 +32,43 @@ void			del_arr(char **arr)
 			free(arr[i++]);
 		ft_memdel((void **)&arr);
 	}
+}
+
+void			kill_all_the_ants(t_ants *a)
+{
+	t_ants		*c;
+	t_ants		*n;
+
+	c = a;
+	while (c)
+	{
+		n = c->next;
+		free(c);
+		c = n;
+	}
+//	free(a);
+}
+
+void			clean_lemin_struct(t_lemin *l)
+{
+	t_room		**cur;
+	int			i;
+
+	l->rooms = NULL;
+//	free(l->start);
+//	free(l->end);
+	cur = l->q;
+	i = 0;
+//	while (cur[i])
+//		free(cur[i++]); 
+	free(l->q);
+	l->q = NULL;
+	i = 0;
+	while(l->paths[i])
+		free(l->paths[i++]);
+	free(l->paths[i]);
+	free(l->paths);
+//	free(l);
 }
 
 static void		clean_adjlists(t_adjlist *adj)
@@ -60,6 +98,7 @@ void		clean_rooms(t_lemin *l)
 		nexr = curr->next;
 		ft_strdel(&curr->name);
 		clean_adjlists(curr->adj);
+		curr->from = NULL;
 		free(curr);
 		curr = nexr;
 	}

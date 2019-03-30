@@ -93,14 +93,14 @@ void		save_path(t_lemin *l)
 
 	cur = l->end;
 	x = 0;
-		printf("\n\n±±±±±±±±±±±\n");  //
+//		printf("\n\n±±±±±±±±±±±\n");  //
 	while (cur)
 	{
-				printf("///{%s|%d]", cur->name, cur->num); //
+//				printf("///{%s|%d]", cur->name, cur->num); //
 		x++;
 		cur = cur->from;
 	}
-		printf("\n±±±±±±±±±±±\n");  //
+//		printf("\n±±±±±±±±±±±\n");  //
 	cur = l->end;
 	y = 0;
 	while (l->paths[y] && l->paths[y][0] != -1)
@@ -160,13 +160,15 @@ void		bfs(t_lemin *l)
 			break;
 		j++;
 	}
-		printf("\n_____\nQUEUE: ");
-		for (int z = 0; l->q[z] != NULL; z++)
-			printf("->{%s|%d]", l->q[z]->name, l->q[z]->num);	//
+//		printf("\n_____\nQUEUE: ");
+//		for (int z = 0; l->q[z] != NULL; z++)
+//			printf("->{%s|%d]", l->q[z]->name, l->q[z]->num);	//
 	if (l->q[j] && l->q[j]->flag == end)
 	{
 			save_path(l);
 			reset_bfs(l);
+			if (l->nrooms == 2)
+				return;
 			bfs(l);
 	}
 	else if (l->paths[0][1] == -1)

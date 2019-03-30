@@ -52,8 +52,9 @@ static void		add_to_adjlist(t_lemin *l, t_room *cur, char *dest)
 
 void		addlink(t_lemin *l, char *line)
 {
-	char		**split;
-	t_room		*cur;
+	char				**split;
+	t_room				*cur;
+	static uintmax_t	links;
 
 //		printf("We're adding link, yo! %s\n", line);  //
 	split = ft_strsplit(line, '-');
@@ -67,17 +68,38 @@ void		addlink(t_lemin *l, char *line)
 		cur = cur->next;
 	}
 	del_arr(split);
+	links = 0;
+	links++;
+	l->links_num = links;
 }
 
-int			validate_link(char *line)
+int			validate_link(t_lemin *l, char *line)
 {
-	char	**split;
-
+	char		**split;
+	t_room		*cur;
+	int			rooms_found[2];
+	
 	if (!ft_strchr(line, '-') || ft_strchr(line, ' ') || ft_strchr(line, '	'))
 		return (0);
 	split = ft_strsplit(line, '-');
 	if (split[2] != NULL)
+	{
+		del_arr(split);
 		return (0);
+	}
+	cur = l->rooms;
+	rooms_found[0] = 0;
+	rooms_found[1] = 0;
+	while (cur)
+	{
+		if (!ft_strcmp(split[0], cur->name))
+			rooms_found[0] = 1;
+		if (!ft_strcmp(split[1], cur->name))
+			rooms_found[1] = 1;
+		cur = cur->next;
+	}
 	del_arr(split);
+	if (rooms_found[0] == 0 || rooms_found[1] == 0)
+		error("ERROR: link to a non-existent room.");
 	return (1);
 }

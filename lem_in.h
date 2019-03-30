@@ -47,7 +47,8 @@ typedef struct 				s_lemin
 	t_room					*end;
 	t_room					**q;
 	int						**paths;
-	intmax_t				move_count;
+	uintmax_t				move_count;
+	uintmax_t				links_num;
 }							t_lemin;
 
 typedef struct 				s_ants
@@ -55,14 +56,13 @@ typedef struct 				s_ants
 	uintmax_t				ant;
 	int						y;
 	int						x;
-	t_room					*in;
 	struct s_ants			*next;
 }							t_ants;
 
 
-int							validate_room(char *line);
+int							validate_room(t_lemin *l, char *line);
 void						addroom(t_lemin *l, char *line, int flag);
-int							validate_link(char *line);
+int							validate_link(t_lemin *l, char *line);
 void						addlink(t_lemin *l, char *line);
 
 void						count_rooms(t_lemin *l);
@@ -75,6 +75,8 @@ void						ants_gogogo(t_lemin *l);
 void						error(char *str);
 void						del_arr(char **arr);
 void						clean_rooms(t_lemin *l);
+void						clean_lemin_struct(t_lemin *l);
+void						kill_all_the_ants(t_ants *a);
 //	DEBUG
 void						print_rooms_list(t_room *rooms);
 void						print_struct_lemin(t_lemin *l);

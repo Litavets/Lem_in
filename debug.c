@@ -33,7 +33,7 @@ void		print_paths(t_lemin *l)
 	size_t		y = 0, x = 1;
 	t_room		*cur;
 
-	printf("\n🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜\n");
+	ft_printf("\n{blue}{u}[# # # # # # # # # # # # # # # # # # # # {0}{blue}>>{-}\n");
 	while (l->paths[y] && l->paths[y][1] != -1)
 	{
 		ft_printf("{b}{I}{cyan}(%lu)>>{0}{-} ", y + 1);
@@ -59,7 +59,7 @@ void		print_paths(t_lemin *l)
 		y++;
 		printf("\n");
 	}
-	printf("🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜 🐜\n\n");
+	ft_printf("{blue}{u}[# # # # # # # # # # # # # # # # # # # # {0}{blue}>>{-}\n\n");
 }
 
 void		print_paths_nums(t_lemin *l)
@@ -69,7 +69,7 @@ void		print_paths_nums(t_lemin *l)
 	printf("\n.................................................\n");
 	while (l->paths[y])
 	{
-		while (x < l->nrooms)
+		while (x < l->nrooms + 1)
 		{
 			printf(" % d|", l->paths[y][x]);
 			x++;
