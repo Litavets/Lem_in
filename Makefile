@@ -30,7 +30,7 @@ LIBFT = libft/libft.a
 
 .PHONY: all clean fclean re
 
-all: fclean $(NAME)
+all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) $(FLAGS) $(OBJS) $(LIBFT) -o $(NAME)
@@ -38,7 +38,6 @@ $(NAME): $(LIBFT) $(OBJS)
 
 $(LIBFT):
 	@make -C libft
-	@make clean -C libft 	#######
 
 $(OBJS):
 	@$(CC) $(FLAGS) -c $(SRC)
@@ -51,7 +50,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@#	@make fclean -C libft
+	@@make fclean -C libft
 	@echo "\033[31mLem_in executable removed.\033[0m"
 
 re: fclean all
