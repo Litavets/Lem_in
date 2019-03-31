@@ -1,25 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   freexit.c                                          :+:      :+:    :+:   */
+/*   cleaning.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dstepane <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/21 20:35:45 by dstepane          #+#    #+#             */
-/*   Updated: 2019/03/21 20:35:46 by dstepane         ###   ########.fr       */
+/*   Created: 2019/03/31 16:22:02 by dstepane          #+#    #+#             */
+/*   Updated: 2019/03/31 16:22:08 by dstepane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-void		error(char *str)
-{
-	ft_printf("{red}{b}%s{0}\n", str);
-//	ft_putendl(str);
-//		printf("\n+++++++++++++++++++++++++++++++EXIT+++++++++++++++++++++++++++++++++++++++++++\n");
-//		system("leaks -q lem-in");
-	exit(0);
-}
 
 void			del_arr(char **arr)
 {
@@ -46,7 +37,6 @@ void			kill_all_the_ants(t_ants *a)
 		free(c);
 		c = n;
 	}
-//	free(a);
 }
 
 void			clean_lemin_struct(t_lemin *l)
@@ -55,20 +45,15 @@ void			clean_lemin_struct(t_lemin *l)
 	int			i;
 
 	l->rooms = NULL;
-//	free(l->start);
-//	free(l->end);
 	cur = l->q;
 	i = 0;
-//	while (cur[i])
-//		free(cur[i++]); 
 	free(l->q);
 	l->q = NULL;
 	i = 0;
-	while(l->paths[i])
+	while (l->paths[i])
 		free(l->paths[i++]);
 	free(l->paths[i]);
 	free(l->paths);
-//	free(l);
 }
 
 static void		clean_adjlists(t_adjlist *adj)
@@ -87,7 +72,7 @@ static void		clean_adjlists(t_adjlist *adj)
 	adj = NULL;
 }
 
-void		clean_rooms(t_lemin *l)
+void			clean_rooms(t_lemin *l)
 {
 	t_room	*curr;
 	t_room	*nexr;

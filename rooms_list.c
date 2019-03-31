@@ -27,14 +27,14 @@ void			count_rooms(t_lemin *l)
 	l->nrooms = how_many_rooms_we_are_going_to_burn;
 }
 
-static char		*get_room_name(char *line)
+static char		*parse_room_name(char *line)
 {
 	char	*ptr;
 	char	*name;
 
 	ptr = ft_strchr(line, ' ');
 	name = ft_strsub(line, 0, ptr - line);
-	return(name);
+	return (name);
 }
 
 static void		get_room_coord(t_room *new, char *line)
@@ -47,19 +47,16 @@ static void		get_room_coord(t_room *new, char *line)
 	del_arr(split);
 }
 
-static t_room		*newroom(t_lemin *l, char *line, int flag)
+static t_room	*newroom(t_lemin *l, char *line, int flag)
 {
 	t_room		*new;
 	static int	num = 0;
 
 	new = (t_room *)malloc(sizeof(t_room));
-	new->name = get_room_name(line);
-//		printf(">> new->name: %s\n", new->name);
+	new->name = parse_room_name(line);
 	new->num = num++;
 	get_room_coord(new, line);
-//		printf(">> new->x: %d y: %d\n", new->xy[0], new->xy[1]);
-		new->flag = flag;
-//		printf(">> new->flag: %d\n", new->flag);
+	new->flag = flag;
 	new->ant = (flag == 1) ? l->ants : 0;
 	if (flag == 1)
 		l->start = new;
@@ -70,63 +67,20 @@ static t_room		*newroom(t_lemin *l, char *line, int flag)
 	new->count = 0;
 	new->from = NULL;
 	new->next = NULL;
-	return(new);
+	return (new);
 }
 
-void		addroom(t_lemin *l, char *line, int flag)
+void			addroom(t_lemin *l, char *line, int flag)
 {
 	t_room		*room;
-	
-//		printf("We're adding room[%d]: %s\n", flag, line);  //
+
 	if (l->rooms == NULL)
 		l->rooms = newroom(l, line, flag);
-	else 
+	else
 	{
 		room = l->rooms;
 		while (room->next)
 			room = room->next;
 		room->next = newroom(l, line, flag);
 	}
-}
-
-void		check_duplicates(t_lemin *l, char *line)
-{
-	t_room		*r;
-	char		**split;
-
-	split = ft_strsplit(line, ' ');
-	r = l->rooms;
-	while (r)
-	{
-		if (!ft_strcmp(split[0], r->name))
-			error("ERROR: There are rooms with the same name.");
-		r = r->next;
-	}
-	del_arr(split);
-}
-
-int			validate_room(t_lemin *l, char *line)
-{
-	int		i;
-	int		j;
-
-	if (line[0] == 'L')
-		error("Invalid room name.");
-	i = 0;
-	while(line[i] && line[i] != ' ')
-		i++;
-	if (i == 0 || line[i] == '\0')
-		return (0);
-	j = i;
-	while (ft_isdigit(line[++i]))
-		;
-	if (i == j + 1 || line[i] != ' ')
-		return (0);
-	j = i;
-	while (ft_isdigit(line[++i]))
-		;
-	if (i == j + 1 || line[i] != '\0')
-		return (0);
-	check_duplicates(l, line);
-	return (1);
 }

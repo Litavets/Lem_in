@@ -12,78 +12,13 @@
 
 #include "lem_in.h"
 
-int			validate_ants(t_lemin *l, char	*line)
+void				error(char *str)
 {
-	int		i;
-
-	i = 0;
-	if (ft_isdigit(line[0]) && !ft_strchr(line, ' ') && !ft_strchr(line, '-')
-		&& l->rooms == NULL)
-	{
-		while (ft_isdigit(line[i]))
-			i++;
-		if (line[i] == '\0')
-			return (1);
-	}
-	return (0);
+	ft_printf("{red}{b}%s{0}\n", str);
+	exit(0);
 }
 
-int			parse_ants(char *line)
-{
-	int			i;
-	intmax_t	ants;
-
-	ants = 0;
-	i = 0;
-	while(line[i])
-	{
-		if (!ft_isdigit(line[i]) && line[i] != '\n')
-		{
-			ft_strdel(&line);
-			error("ERROR: Invalid ants number.");
-		}
-		i++;
-	}
-	ants = ft_atoi(line);
-	if (ants <= 0 || ants > INT_MAX) 
-	{
-		ft_strdel(&line);
-		error("ERROR: Invalid ants number.");
-	}
-	return ((size_t)ants);	
-}
-
-void		parse_comment(t_lemin *l, char **line)
-{
-	if (!ft_strcmp(*line, "##start"))
-	{
-		while (*line[0] == '#')
-		{
-			ft_putendl(*line);
-			ft_strdel(*&line);
-			get_next_line(0, *&line);
-		}
-		if (validate_room(l, *line))
-			addroom(l, *line, 1);
-		else
-			error("ERROR: Invalid room parameters input.");
-	}
-	else if (!ft_strcmp(*line, "##end"))
-	{
-		while (*line[0] == '#')
-		{
-			ft_putendl(*line);
-			ft_strdel(*&line);
-			get_next_line(0, *&line);
-		}
-		if (validate_room(l, *line))
-			addroom(l, *line, 2);
-		else
-			error("ERROR: Invalid room parameters input.");
-	}
-}
-
-t_lemin		*init_lemin(void)
+static	t_lemin		*init_lemin(void)
 {
 	t_lemin		*l;
 
@@ -97,34 +32,22 @@ t_lemin		*init_lemin(void)
 	l->q = NULL;
 	l->paths = NULL;
 	l->move_count = 0;
-	return(l);
+	return (l);
 }
 
-int			main(void)
+static void			solve(t_lemin *l)
 {
-//		FILE 	*fp = freopen("./test", "r", stdin);  //
-	
-	char		*line;
-	t_lemin		*l;
-	int			ret;
+	link_adjlist(l);
+	create_paths_arr_and_q(l);
+	bfs(l);
+	print_paths(l);
+	ants_gogogo(l);
+	clean_rooms(l);
+	clean_lemin_struct(l);
+}
 
-	l = init_lemin();
-
-	while ((ret = get_next_line(0, &line)) > 0)
-	{
-		if (validate_ants(l, line))
-			l->ants = parse_ants(line);
-		else if (line && line[0] == '#')
-			parse_comment(l, &line);
-		else if (validate_room(l, line))
-			addroom(l, line, 0);
-		else if (validate_link(l ,line))
-			addlink(l, line);
-		else if (*line || (!*line && ret > 0))
-			error("ERROR: Invalid input.");
-		ft_putendl(line);
-		ft_strdel(&line);
-	}
+static void			more_errors(t_lemin *l, int ret)
+{
 	if (ret < 0)
 		error("ERROR: Can't read the file.");
 	if (!l->start || !l->end)
@@ -136,20 +59,31 @@ int			main(void)
 	count_rooms(l);
 	if (l->nrooms == 0)
 		error("ERROR: Make some rooms for those lovely little ants!");
-	link_adjlist(l);
-	create_paths_arr_and_q(l);
-	bfs(l);
-//		print_struct_lemin(l); //
-//		print_rooms_list(l->rooms); //
-//		print_paths_nums(l);  //
-//		print_paths(l);
-	ants_gogogo(l);
-	clean_rooms(l);
-	clean_lemin_struct(l);
-//	free(l);
-//		fclose(fp);  //
+}
 
-//	printf("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-//	system("leaks -q lem-in");
+int					main(void)
+{
+	char		*line;
+	t_lemin		*l;
+	int			ret;
+
+	l = init_lemin();
+	while ((ret = get_next_line(0, &line)) > 0)
+	{
+		if (validate_ants(l, line))
+			l->ants = parse_ants(line);
+		else if (line && line[0] == '#')
+			parse_comment(l, &line);
+		else if (validate_room(l, line))
+			addroom(l, line, 0);
+		else if (validate_link(l, line))
+			addlink(l, line);
+		else if (*line || (!*line && ret > 0))
+			error("ERROR: Invalid input.");
+		ft_putendl(line);
+		ft_strdel(&line);
+	}
+	more_errors(l, ret);
+	solve(l);
 	return (0);
 }

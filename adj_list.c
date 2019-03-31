@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-static int			get_room_num(t_lemin *l, char *dest)
+static int		get_room_num(t_lemin *l, char *dest)
 {
 	t_room		*cur;
 
@@ -35,9 +35,7 @@ static void		add_to_adjlist(t_lemin *l, t_room *cur, char *dest)
 	adj = cur->adj;
 	newadj->next = NULL;
 	newadj->dest = ft_strdup(dest);
-//		printf(">> adj->dest: %s\n", newadj->dest); //
 	newadj->dst = get_room_num(l, newadj->dest);
-//		printf(">> adj->dst: %d\n", newadj->dst);
 	newadj->link = NULL;
 	if (cur->adj == NULL)
 		cur->adj = newadj;
@@ -47,16 +45,14 @@ static void		add_to_adjlist(t_lemin *l, t_room *cur, char *dest)
 			adj = adj->next;
 		adj->next = newadj;
 	}
-
 }
 
-void		addlink(t_lemin *l, char *line)
+void			addlink(t_lemin *l, char *line)
 {
 	char				**split;
 	t_room				*cur;
 	static uintmax_t	links;
 
-//		printf("We're adding link, yo! %s\n", line);  //
 	split = ft_strsplit(line, '-');
 	cur = l->rooms;
 	while (cur)
@@ -73,12 +69,12 @@ void		addlink(t_lemin *l, char *line)
 	l->links_num = links;
 }
 
-int			validate_link(t_lemin *l, char *line)
+int				validate_link(t_lemin *l, char *line)
 {
 	char		**split;
 	t_room		*cur;
 	int			rooms_found[2];
-	
+
 	if (!ft_strchr(line, '-') || ft_strchr(line, ' ') || ft_strchr(line, '	'))
 		return (0);
 	split = ft_strsplit(line, '-');
@@ -92,10 +88,8 @@ int			validate_link(t_lemin *l, char *line)
 	rooms_found[1] = 0;
 	while (cur)
 	{
-		if (!ft_strcmp(split[0], cur->name))
-			rooms_found[0] = 1;
-		if (!ft_strcmp(split[1], cur->name))
-			rooms_found[1] = 1;
+		(!ft_strcmp(split[0], cur->name)) ? (rooms_found[0] = 1) : 0;
+		(!ft_strcmp(split[1], cur->name)) ? (rooms_found[1] = 1) : 0;
 		cur = cur->next;
 	}
 	del_arr(split);

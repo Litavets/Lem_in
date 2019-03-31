@@ -15,12 +15,15 @@ CC = gcc
 FLAGS = -g -Wall -Wextra -Werror
 HEAD = ./lem_in.h
 SRC =	main.c \
+		parse.c \
 		rooms_list.c \
 		adj_list.c \
-		freexit.c \
+		adj_list2.c \
 		bfs.c \
+		print_paths.c \
 		ants_gogogo.c \
-		debug.c
+		ants_gogogo2.c \
+		cleaning.c \
 
 OBJS = $(SRC:.c=.o)
 LIBFT = libft/libft.a

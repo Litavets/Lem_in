@@ -15,7 +15,7 @@
 
 # include "./libft/includes/libft.h"
 
-typedef struct 				s_adjlist
+typedef struct				s_adjlist
 {
 	int						dst;
 	char					*dest;
@@ -23,14 +23,14 @@ typedef struct 				s_adjlist
 	struct s_adjlist		*next;
 }							t_adjlist;
 
-typedef struct 				s_room
+typedef struct				s_room
 {
 	char					*name;
 	int						num;
 	int						x;
 	int						y;
 	enum {no, start, end}	flag;
-	uintmax_t				ant;
+	int						ant;
 	int						fire;
 	int						count;
 	struct s_room			*from;
@@ -38,9 +38,9 @@ typedef struct 				s_room
 	struct s_room			*next;
 }							t_room;
 
-typedef struct 				s_lemin
+typedef struct				s_lemin
 {
-	uintmax_t				ants;
+	int						ants;
 	uintmax_t				nrooms;
 	t_room					*rooms;
 	t_room					*start;
@@ -51,14 +51,17 @@ typedef struct 				s_lemin
 	uintmax_t				links_num;
 }							t_lemin;
 
-typedef struct 				s_ants
+typedef struct				s_ants
 {
-	uintmax_t				ant;
+	int						ant;
 	int						y;
 	int						x;
 	struct s_ants			*next;
 }							t_ants;
 
+int							validate_ants(t_lemin *l, char	*line);
+int							parse_ants(char *line);
+void						parse_comment(t_lemin *l, char **line);
 
 int							validate_room(t_lemin *l, char *line);
 void						addroom(t_lemin *l, char *line, int flag);
@@ -68,20 +71,18 @@ void						addlink(t_lemin *l, char *line);
 void						count_rooms(t_lemin *l);
 void						link_adjlist(t_lemin *l);
 void						create_paths_arr_and_q(t_lemin *l);
+
 void						bfs(t_lemin *l);
 t_ants						*make_ants_list(t_lemin *l);
 void						ants_gogogo(t_lemin *l);
+char						*get_room_name(t_lemin *l, int num);
+void						print_move(t_lemin *l, t_ants *a, char c);
+void						print_paths(t_lemin *l);
 
 void						error(char *str);
 void						del_arr(char **arr);
 void						clean_rooms(t_lemin *l);
 void						clean_lemin_struct(t_lemin *l);
 void						kill_all_the_ants(t_ants *a);
-//	DEBUG
-void						print_rooms_list(t_room *rooms);
-void						print_struct_lemin(t_lemin *l);
-void						print_paths_nums(t_lemin *l);
-void						print_paths(t_lemin *l);
-void						print_ants(t_ants	*a);
 
 #endif

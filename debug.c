@@ -12,6 +12,12 @@
 
 #include "lem_in.h"
 
+//	DEBUG
+void						print_rooms_list(t_room *rooms);
+void						print_struct_lemin(t_lemin *l);
+void						print_paths_nums(t_lemin *l);
+void						print_ants(t_ants	*a);
+
 void		print_ants(t_ants	*a)
 {
 	t_ants		*cur;
@@ -20,46 +26,12 @@ void		print_ants(t_ants	*a)
 	cur = a;
 	while (cur)
 	{
-		printf("(%lu) ", cur->ant);
+		printf("(%d) ", cur->ant);
 		printf("y:%d x:%d", cur->y, cur->x);
 		printf("\n");
 		cur = cur->next;
 	}
 	printf("\n:::::::::::::::::::::::::::::::::\n");
-}
-
-void		print_paths(t_lemin *l)
-{
-	size_t		y = 0, x = 1;
-	t_room		*cur;
-
-	ft_printf("\n{blue}{u}[# # # # # # # # # # # # # # # # # # # # {0}{blue}>>{-}\n");
-	while (l->paths[y] && l->paths[y][1] != -1)
-	{
-		ft_printf("{b}{I}{cyan}(%lu)>>{0}{-} ", y + 1);
-		while (l->paths[y][x] != -1)
-		{
-			cur = l->rooms;
-			while (cur)
-			{
-				if (cur->num == l->paths[y][x])
-				{
-					if (cur->num == l->start->num)
-						ft_printf("{b}{green}[%d/%s}-->{-}{0}", cur->num, cur->name);
-					else if (cur->num == l->end->num)
-						ft_printf("{b}{magenta}[%d/%s}{-}{0}", cur->num, cur->name);
-					else
-						ft_printf("{yellow}[%d/%s}-->{-}", cur->num, cur->name);
-				}
-				cur = cur->next;
-			}
-			x++;
-		}
-		x = 1;
-		y++;
-		printf("\n");
-	}
-	ft_printf("{blue}{u}[# # # # # # # # # # # # # # # # # # # # {0}{blue}>>{-}\n\n");
 }
 
 void		print_paths_nums(t_lemin *l)
@@ -103,7 +75,7 @@ void		print_rooms_list(t_room *rooms)
 		printf("num : [%d]\n", cur->num);
 		printf(">> x:%d y:%d\n", cur->x, cur->y);
 		printf(">> flag: %d\n", cur->flag);
-		printf(">> ant: %ju\n", cur->ant);
+		printf(">> ant: %d\n", cur->ant);
 		printf(">> fire: %d\n", cur->fire);
 		printf(">> count: %d\n", cur->count);
 		if (cur->from)
