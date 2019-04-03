@@ -24,6 +24,7 @@ SRC =	main.c \
 		ants_gogogo.c \
 		ants_gogogo2.c \
 		cleaning.c \
+		debug.c ########################
 
 OBJS = $(SRC:.c=.o)
 LIBFT = libft/libft.a

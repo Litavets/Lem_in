@@ -15,6 +15,8 @@
 void				error(char *str)
 {
 	ft_printf("{red}{b}%s{0}\n", str);
+		printf("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+		system("leaks -q lem-in");
 	exit(0);
 }
 
@@ -39,9 +41,12 @@ static void			solve(t_lemin *l)
 {
 	link_adjlist(l);
 	create_paths_arr_and_q(l);
+//		delete_1step_way(l);		///
+		print_rooms_list(l->rooms);  ///
 	bfs(l);
 	print_paths(l);
 	ants_gogogo(l);
+		print_rooms_list(l->rooms);  ///
 	clean_rooms(l);
 	clean_lemin_struct(l);
 }
@@ -63,6 +68,7 @@ static void			more_errors(t_lemin *l, int ret)
 
 int					main(void)
 {
+		FILE 	*fp = freopen("./test", "r", stdin);  //
 	char		*line;
 	t_lemin		*l;
 	int			ret;
@@ -71,7 +77,7 @@ int					main(void)
 	while ((ret = get_next_line(0, &line)) > 0)
 	{
 		if (validate_ants(l, line))
-			l->ants = parse_ants(line);
+			l->ants = parse_ants(l, line);
 		else if (line && line[0] == '#')
 			parse_comment(l, &line);
 		else if (validate_room(l, line))
@@ -85,5 +91,8 @@ int					main(void)
 	}
 	more_errors(l, ret);
 	solve(l);
+		fclose(fp);  //
+		printf("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+		system("leaks -q lem-in");
 	return (0);
 }

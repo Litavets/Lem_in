@@ -127,10 +127,12 @@ CRUTCH FOT 2 ROOMS DIDN'T WORK HERE)))
 *****************************************************************
 
 
+AND TEST INPUT FROM TERMINAL!!!!
+
+AND ADD RELINKS TO MAKEFILE
 
 
-
-
+*****************************************************************
 
 
 

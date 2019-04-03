@@ -16,13 +16,19 @@ static void		check_duplicates(t_lemin *l, char *line)
 {
 	t_room		*r;
 	char		**split;
+	int			x;
+	int			y;
 
 	split = ft_strsplit(line, ' ');
 	r = l->rooms;
+	x = ft_atoi(split[1]);
+	y = ft_atoi(split[2]);
 	while (r)
 	{
 		if (!ft_strcmp(split[0], r->name))
-			error("ERROR: There are rooms with the same name.");
+			error("ERROR: Rooms with the same name.");
+		if (r->x == x && r->y == y)
+			error("ERROR: Rooms with the same coordinates.");
 		r = r->next;
 	}
 	del_arr(split);
@@ -70,7 +76,7 @@ int				validate_ants(t_lemin *l, char *line)
 	return (0);
 }
 
-int				parse_ants(char *line)
+int				parse_ants(t_lemin *l, char *line)
 {
 	int			i;
 	intmax_t	ants;
@@ -92,6 +98,8 @@ int				parse_ants(char *line)
 		ft_strdel(&line);
 		error("ERROR: Invalid ants number.");
 	}
+	if (l->ants != 0)
+		error("ERROR: Multiple ants input. Shame on you!");
 	return ((size_t)ants);
 }
 
@@ -104,6 +112,7 @@ void			parse_comment(t_lemin *l, char **line)
 			ft_putendl(*line);
 			ft_strdel(*&line);
 			get_next_line(0, *&line);
+			(!ft_strcmp(*line, "##start")) ? error("ERROR: Multiple start flags.") : 0;
 		}
 		(validate_room(l, *line)) ? addroom(l, *line, 1) :
 			error("ERROR: Invalid room parameters input.");
@@ -115,6 +124,7 @@ void			parse_comment(t_lemin *l, char **line)
 			ft_putendl(*line);
 			ft_strdel(*&line);
 			get_next_line(0, *&line);
+			(!ft_strcmp(*line, "##end")) ? error("ERROR: Multiple end flags.") : 0;
 		}
 		(validate_room(l, *line)) ? addroom(l, *line, 2) :
 			error("ERROR: Invalid room parameters input.");

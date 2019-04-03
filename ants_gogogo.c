@@ -34,12 +34,12 @@ int				is_good_way(t_lemin *l, int y)
 
 void			move_along(t_lemin *l, t_ants *a)
 {
+	while (a->y == -2)
+		a = a->next;
 	while (a && a->y != -1)
 	{
-		while (a->y == -2)
-			a = a->next;
 		a->x++;
-		if (!l->paths[a->y][a->x + 1] || l->paths[a->y][a->x + 1] == -1)
+		if (l->paths[a->y][a->x] == l->end->num)
 		{
 			print_move(l, a, 'F');
 			a->y = -2;
@@ -98,7 +98,7 @@ void			ants_gogogo(t_lemin *l)
 	while (l->end->ant < l->ants)
 	{
 		ft_printf("{cyan}[%lu]>{-} ", l->move_count + 1);
-		if (l->nrooms > 2)
+		if (l->move_count)
 			move_along(l, a);
 		if (l->start->ant > 0)
 			move_from_start(l, a);

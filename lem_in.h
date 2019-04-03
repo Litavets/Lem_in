@@ -60,7 +60,7 @@ typedef struct				s_ants
 }							t_ants;
 
 int							validate_ants(t_lemin *l, char	*line);
-int							parse_ants(char *line);
+int							parse_ants(t_lemin *l, char *line);
 void						parse_comment(t_lemin *l, char **line);
 
 int							validate_room(t_lemin *l, char *line);
@@ -78,11 +78,18 @@ void						ants_gogogo(t_lemin *l);
 char						*get_room_name(t_lemin *l, int num);
 void						print_move(t_lemin *l, t_ants *a, char c);
 void						print_paths(t_lemin *l);
+void						delete_1step_way(t_lemin *l);
 
 void						error(char *str);
 void						del_arr(char **arr);
 void						clean_rooms(t_lemin *l);
 void						clean_lemin_struct(t_lemin *l);
 void						kill_all_the_ants(t_ants *a);
+
+///////////TO DELETE
+void						print_rooms_list(t_room *rooms);
+void						print_struct_lemin(t_lemin *l);
+void						print_paths_nums(t_lemin *l);
+void						print_ants(t_ants	*a);
 
 #endif

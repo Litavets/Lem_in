@@ -38,7 +38,7 @@ void			save_path(t_lemin *l)
 	}
 	cur = l->end;
 	y = 0;
-	while (l->paths[y] && l->paths[y][0] != -1)
+	while (l->paths[y + 1] && l->paths[y][0] != -1)
 		y++;
 	while (cur)
 	{
@@ -73,9 +73,12 @@ static void		bfs2(t_lemin *l, size_t j)
 	if (l->q[j] && l->q[j]->flag == end)
 	{
 		save_path(l);
+			print_paths_nums(l);	////
+		if (l->paths[0][2] == l->end->num)
+			delete_1step_way(l);
 		reset_bfs(l);
-		if (l->nrooms == 2)
-			return ;
+//		if (l->nrooms == 2)
+//			return ;
 		bfs(l);
 	}
 	else if (l->paths[0][1] == -1)

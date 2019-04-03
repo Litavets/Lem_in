@@ -23,7 +23,7 @@ void			create_paths_arr_and_q(t_lemin *l)
 	y = 0;
 	while (y < l->nrooms + 1)
 		l->q[y++] = NULL;
-	ways = (l->start->count >= l->end->count) ? l->start->count : l->end->count;
+	ways = (l->start->count <= l->end->count) ? l->start->count : l->end->count;
 	if (!(l->paths = (int **)malloc(sizeof(int *) * ways + 1)))
 		return ;
 	y = 0;

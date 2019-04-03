@@ -12,6 +12,65 @@
 
 #include "lem_in.h"
 
+static void		remove_adj_node(t_adjlist **adj, int f)
+{
+	t_adjlist	*tmp;
+	t_adjlist	*nxt;
+
+	tmp = *adj;
+	if (f == 1)
+	{
+		*adj = tmp->next;
+		ft_strdel(&tmp->dest);
+		ft_bzero((void *)tmp, sizeof(tmp));
+		free(tmp);
+	}
+	else
+	{
+		nxt = tmp->next->next;
+		ft_strdel(&tmp->next->dest);
+		ft_bzero((void *)tmp->next, sizeof(tmp->next));
+		free(tmp->next);
+		(*adj)->next = nxt;
+	}
+}
+
+void			delete_1step_way(t_lemin *l)
+{
+	t_adjlist	*adj;
+
+	adj = l->start->adj;
+	if (adj->dst == l->end->num)
+		remove_adj_node(&adj, 1);
+	else
+	{
+		while (adj && adj->next)
+		{
+			if (adj->next->dst == l->end->num)
+			{
+				remove_adj_node(&adj, 0);
+				break ;
+			}
+			adj = adj->next;
+		}
+	}
+	adj = l->end->adj;
+	if (adj->dst == l->start->num)
+		remove_adj_node(&adj, 1);
+	else
+	{
+		while (adj && adj->next)
+		{
+			if (adj->next->dst == l->start->num)
+			{
+				remove_adj_node(&adj, 0);
+				break ;
+			}
+			adj = adj->next;
+		}
+	}
+}
+
 static int		get_room_num(t_lemin *l, char *dest)
 {
 	t_room		*cur;
@@ -32,17 +91,23 @@ static void		add_to_adjlist(t_lemin *l, t_room *cur, char *dest)
 	t_adjlist	*newadj;
 
 	newadj = (t_adjlist *)malloc(sizeof(t_adjlist));
-	adj = cur->adj;
 	newadj->next = NULL;
 	newadj->dest = ft_strdup(dest);
 	newadj->dst = get_room_num(l, newadj->dest);
 	newadj->link = NULL;
+	adj = cur->adj;
 	if (cur->adj == NULL)
 		cur->adj = newadj;
 	else
 	{
+		if (adj->dst == newadj->dst)
+				error("ERROR: Duplicate links.");
 		while (adj->next)
+		{
+			if (adj->dst == newadj->dst)
+				error("ERROR: Duplicate links.");
 			adj = adj->next;
+		}
 		adj->next = newadj;
 	}
 }
@@ -59,7 +124,7 @@ void			addlink(t_lemin *l, char *line)
 	{
 		if (!ft_strcmp(cur->name, split[0]))
 			add_to_adjlist(l, cur, split[1]);
-		else if (!ft_strcmp(cur->name, split[1]))
+		if (!ft_strcmp(cur->name, split[1]))
 			add_to_adjlist(l, cur, split[0]);
 		cur = cur->next;
 	}
@@ -91,6 +156,11 @@ int				validate_link(t_lemin *l, char *line)
 		(!ft_strcmp(split[0], cur->name)) ? (rooms_found[0] = 1) : 0;
 		(!ft_strcmp(split[1], cur->name)) ? (rooms_found[1] = 1) : 0;
 		cur = cur->next;
+	}
+	if (!ft_strcmp(split[0], split[1]))
+	{
+		del_arr(split);
+		error("ERROR: Don't link rooms with themselves, you pervert!");
 	}
 	del_arr(split);
 	if (rooms_found[0] == 0 || rooms_found[1] == 0)
