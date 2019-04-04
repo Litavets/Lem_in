@@ -57,7 +57,7 @@ void		print_adjlist(t_adjlist *adj)
 	while (adj)
 	{
 //		printf("{%s|%d]-", adj->dest, adj->dst);
-		printf("{%s|%d]-", adj->link->name, adj->link->num);
+		printf("[%d|%s}-", adj->link->num, adj->link->name);
 		adj = adj->next;
 	}
 	printf("\n");

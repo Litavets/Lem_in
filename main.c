@@ -42,11 +42,11 @@ static void			solve(t_lemin *l)
 	link_adjlist(l);
 	create_paths_arr_and_q(l);
 //		delete_1step_way(l);		///
-		print_rooms_list(l->rooms);  ///
+//		print_rooms_list(l->rooms);  ///
 	bfs(l);
 	print_paths(l);
 	ants_gogogo(l);
-		print_rooms_list(l->rooms);  ///
+//		print_rooms_list(l->rooms);  ///
 	clean_rooms(l);
 	clean_lemin_struct(l);
 }
@@ -68,7 +68,7 @@ static void			more_errors(t_lemin *l, int ret)
 
 int					main(void)
 {
-		FILE 	*fp = freopen("./test", "r", stdin);  //
+//		FILE 	*fp = freopen("./test", "r", stdin);  //
 	char		*line;
 	t_lemin		*l;
 	int			ret;
@@ -91,7 +91,7 @@ int					main(void)
 	}
 	more_errors(l, ret);
 	solve(l);
-		fclose(fp);  //
+//		fclose(fp);  //
 		printf("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 		system("leaks -q lem-in");
 	return (0);

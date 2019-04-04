@@ -12,18 +12,19 @@
 
 #include "lem_in.h"
 
-static void		remove_adj_node(t_adjlist **adj, int f)
+static void		remove_adj_node(t_lemin *l, t_adjlist **adj, int f)
 {
 	t_adjlist	*tmp;
 	t_adjlist	*nxt;
 
 	tmp = *adj;
-	if (f == 1)
+	if (f)
 	{
-		*adj = tmp->next;
+		*adj = (*adj)->next;
 		ft_strdel(&tmp->dest);
 		ft_bzero((void *)tmp, sizeof(tmp));
 		free(tmp);
+		(f == 1) ? (l->start->adj = *adj) : (l->end->adj = *adj);
 	}
 	else
 	{
@@ -41,14 +42,14 @@ void			delete_1step_way(t_lemin *l)
 
 	adj = l->start->adj;
 	if (adj->dst == l->end->num)
-		remove_adj_node(&adj, 1);
+		remove_adj_node(l, &adj, 1);
 	else
 	{
 		while (adj && adj->next)
 		{
 			if (adj->next->dst == l->end->num)
 			{
-				remove_adj_node(&adj, 0);
+				remove_adj_node(l, &adj, 0);
 				break ;
 			}
 			adj = adj->next;
@@ -56,14 +57,14 @@ void			delete_1step_way(t_lemin *l)
 	}
 	adj = l->end->adj;
 	if (adj->dst == l->start->num)
-		remove_adj_node(&adj, 1);
+		remove_adj_node(l, &adj, 2);
 	else
 	{
 		while (adj && adj->next)
 		{
 			if (adj->next->dst == l->start->num)
 			{
-				remove_adj_node(&adj, 0);
+				remove_adj_node(l, &adj, 0);
 				break ;
 			}
 			adj = adj->next;

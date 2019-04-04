@@ -26,7 +26,7 @@ int				is_good_way(t_lemin *l, int y)
 		moves += l->paths[y][0] - l->paths[y1][0];
 		y1--;
 	}
-	if ((uintmax_t)l->start->ant > moves)
+	if ((uintmax_t)l->start->ant >= moves)
 		return (1);
 	else
 		return (0);
@@ -34,19 +34,20 @@ int				is_good_way(t_lemin *l, int y)
 
 void			move_along(t_lemin *l, t_ants *a)
 {
-	while (a->y == -2)
-		a = a->next;
-	while (a && a->y != -1)
+	while (a)
 	{
-		a->x++;
-		if (l->paths[a->y][a->x] == l->end->num)
+		if (a->y >= 0)
 		{
-			print_move(l, a, 'F');
-			a->y = -2;
-			l->end->ant++;
+			a->x++;
+			if (l->paths[a->y][a->x] == l->end->num)
+			{
+				print_move(l, a, 'F');
+				a->y = -2;
+				l->end->ant++;
+			}
+			else
+				print_move(l, a, 'M');
 		}
-		else
-			print_move(l, a, 'M');
 		a = a->next;
 	}
 }
@@ -57,7 +58,7 @@ void			move_from_start2(t_lemin *l, t_ants **a, int *moved, int *y)
 	(*a)->x++;
 	if (l->paths[(*a)->y][(*a)->x] == l->end->num)
 	{
-		print_move(l, (*a), 'F');
+		print_move(l, (*a), '1');
 		(*a)->y = -2;
 		l->end->ant++;
 	}

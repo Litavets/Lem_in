@@ -70,18 +70,21 @@ void			reset_bfs(t_lemin *l)
 
 static void		bfs2(t_lemin *l, size_t j)
 {
+	static int	toggle = 0;
+
 	if (l->q[j] && l->q[j]->flag == end)
 	{
 		save_path(l);
-			print_paths_nums(l);	////
-		if (l->paths[0][2] == l->end->num)
+//			print_paths_nums(l);	////
+		if (l->paths[0][2] == l->end->num && !toggle)
+		{
 			delete_1step_way(l);
+			toggle = 1;
+		}
 		reset_bfs(l);
-//		if (l->nrooms == 2)
-//			return ;
 		bfs(l);
 	}
-	else if (l->paths[0][1] == -1)
+	else if (!*l->paths || l->paths[0][1] == -1)
 		error("ERROR: There's no path from start to end.");
 	else
 		return ;

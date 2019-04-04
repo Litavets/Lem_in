@@ -22,9 +22,11 @@ void				print_move(t_lemin *l, t_ants *a, char c)
 
 	name = get_room_name(l, l->paths[a->y][a->x]);
 	if (c == 'S')
-		ft_printf("{green}{b}L%ld-%s{0}{-} ", a->ant, name);
+		ft_printf("{green}{b}L%ld{yellow}-%s{0}{-} ", a->ant, name);
 	else if (c == 'F')
-		ft_printf("{magenta}{b}L%ld-%s{0}{-} ", a->ant, name);
+		ft_printf("{yellow}{b}L%ld{magenta}-%s{0}{-} ", a->ant, name);
+	else if (c == '1')
+		ft_printf("{green}{b}L%ld{magenta}-%s{0}{-} ", a->ant, name);
 	else
 		ft_printf("{yellow}L%ld{yellow}-%s{-} ", a->ant, name);
 }
