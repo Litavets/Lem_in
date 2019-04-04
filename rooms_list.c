@@ -75,7 +75,7 @@ void			addroom(t_lemin *l, char *line, int flag)
 	t_room		*room;
 
 	if ((flag == 1 && l->start) || (flag == 2 && l->end))
-		error("ERROR: Multiple start or end rooms make me sad :(");
+		error("ERROR: Multiple start/end rooms make me sad :(");
 	if (l->ants == 0)
 		error("ERROR: Nice try. Give me ants first!");
 	if (l->rooms == NULL)

@@ -105,28 +105,24 @@ int				parse_ants(t_lemin *l, char *line)
 
 void			parse_comment(t_lemin *l, char **line)
 {
+	int		flag;
+	
+	flag = 0;
 	if (!ft_strcmp(*line, "##start"))
-	{
-		while (*line[0] == '#')
-		{
-			ft_putendl(*line);
-			ft_strdel(*&line);
-			get_next_line(0, *&line);
-			(!ft_strcmp(*line, "##start")) ? error("ERROR: Multiple start flags.") : 0;
-		}
-		(validate_room(l, *line)) ? addroom(l, *line, 1) :
-			error("ERROR: Invalid room parameters input.");
-	}
+		flag = 1;
 	else if (!ft_strcmp(*line, "##end"))
+		flag = 2;
+	if (flag)
 	{
 		while (*line[0] == '#')
 		{
 			ft_putendl(*line);
 			ft_strdel(*&line);
 			get_next_line(0, *&line);
-			(!ft_strcmp(*line, "##end")) ? error("ERROR: Multiple end flags.") : 0;
+			((!ft_strcmp(*line, "##start")) || (!ft_strcmp(*line, "##end")))
+				? error("ERROR: Start/end flags are messed up!") : 0;
 		}
-		(validate_room(l, *line)) ? addroom(l, *line, 2) :
-			error("ERROR: Invalid room parameters input.");
+		(validate_room(l, *line)) ? addroom(l, *line, flag) :
+			error("ERROR: Invalid room input. Ants hate this!");
 	}
 }
