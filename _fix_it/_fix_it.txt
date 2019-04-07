@@ -1,3 +1,4 @@
+
 *****************************************************************
 
 
@@ -7,7 +8,9 @@ AND ADD RELINKS TO MAKEFILE
 
 
 DUPLICATE LINKS -- option ON/OFF?
+SELF LINKS -- option ON/OFF?
 
+minus coordinates?
 
 *****************************************************************
 

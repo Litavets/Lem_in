@@ -101,12 +101,12 @@ static void		add_to_adjlist(t_lemin *l, t_room *cur, char *dest)
 		cur->adj = newadj;
 	else
 	{
-		if (adj->dst == newadj->dst)
-				error("ERROR: Duplicate links.");
+//		if (adj->dst == newadj->dst)
+//			error("ERROR: Duplicate links.");
 		while (adj->next)
 		{
-			if (adj->dst == newadj->dst)
-				error("ERROR: Duplicate links.");
+//			if (adj->dst == newadj->dst)
+//				error("ERROR: Duplicate links.");
 			adj = adj->next;
 		}
 		adj->next = newadj;
