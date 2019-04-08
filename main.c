@@ -26,6 +26,7 @@ static	t_lemin		*init_lemin(void)
 
 	if (!(l = (t_lemin *)malloc(sizeof(t_lemin))))
 		return (NULL);
+	ft_bzero(l->options, 4);
 	l->ants = 0;
 	l->nrooms = 0;
 	l->rooms = NULL;
@@ -44,7 +45,8 @@ static void			solve(t_lemin *l)
 //		delete_1step_way(l);		///
 //		print_rooms_list(l->rooms);  ///
 	bfs(l);
-	print_paths(l);
+	if (!l->options[0])
+		print_paths(l);
 	ants_gogogo(l);
 //		print_rooms_list(l->rooms);  ///
 	clean_rooms(l);
@@ -66,7 +68,36 @@ static void			more_errors(t_lemin *l, int ret)
 		error("ERROR: Are you kidding? No links, dude.");
 }
 
-int					main(void)
+void				options(t_lemin *l, int ac, char *av[])
+{
+	int			i;
+
+	i = 1;
+	if (ac > 1)
+	{
+		while (i < ac)
+		{
+			if (!ft_strcmp(av[i], "-p"))
+				l->options[0] = 'p';
+			else if (!ft_strcmp(av[i], "-c"))
+				l->options[1] = 'c';
+			else if (!ft_strcmp(av[i], "-d"))
+				l->options[2] = 'd';
+			else if (!ft_strcmp(av[i], "-s"))
+				l->options[3] = 's';
+			else
+			{
+				ft_printf("{I}OPTIONS:{0}\n");
+				ft_printf("-p	hide discovered paths\n-c	hide moves count\n");
+				ft_printf("-d	allow duplicate links\n-s	allow self-links\n");
+				error("\nERROR: invalid option.");
+			}
+			i++;
+		}
+	}
+}
+
+int					main(int ac, char *av[])
 {
 //		FILE 	*fp = freopen("./test", "r", stdin);  //
 	char		*line;
@@ -74,6 +105,7 @@ int					main(void)
 	int			ret;
 
 	l = init_lemin();
+	options(l, ac, av);
 	while ((ret = get_next_line(0, &line)) > 0)
 	{
 		if (validate_ants(l, line))

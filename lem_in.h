@@ -38,8 +38,16 @@ typedef struct				s_room
 	struct s_room			*next;
 }							t_room;
 
+/*
+** options[0] -p hide discovered paths
+** options[1] -c hide moves count
+** options[2] -d allow duplicate links
+** options[3] -s allow self-links
+*/
+
 typedef struct				s_lemin
 {
+	char					options[4];
 	int						ants;
 	uintmax_t				nrooms;
 	t_room					*rooms;

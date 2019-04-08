@@ -101,12 +101,12 @@ static void		add_to_adjlist(t_lemin *l, t_room *cur, char *dest)
 		cur->adj = newadj;
 	else
 	{
-//		if (adj->dst == newadj->dst)
-//			error("ERROR: Duplicate links.");
+		if ((adj->dst == newadj->dst) && !l->options[2])
+			error("ERROR: Duplicate links.\n[Allow with -d option]");
 		while (adj->next)
 		{
-//			if (adj->dst == newadj->dst)
-//				error("ERROR: Duplicate links.");
+			if ((adj->dst == newadj->dst) && !l->options[2])
+			error("ERROR: Duplicate links.\n[Allow with -d option]");
 			adj = adj->next;
 		}
 		adj->next = newadj;
@@ -158,10 +158,10 @@ int				validate_link(t_lemin *l, char *line)
 		(!ft_strcmp(split[1], cur->name)) ? (rooms_found[1] = 1) : 0;
 		cur = cur->next;
 	}
-	if (!ft_strcmp(split[0], split[1]))
+	if (!ft_strcmp(split[0], split[1]) && !l->options[3])
 	{
 		del_arr(split);
-		error("ERROR: Don't link rooms with themselves, you pervert!");
+		error("ERROR: Don't link rooms with themselves, you pervert!\n[Allow with -s option]");
 	}
 	del_arr(split);
 	if (rooms_found[0] == 0 || rooms_found[1] == 0)

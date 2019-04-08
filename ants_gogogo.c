@@ -106,6 +106,7 @@ void			ants_gogogo(t_lemin *l)
 		ft_putchar('\n');
 		l->move_count++;
 	}
-	ft_printf("\n{red}>> MOVES COUNT: {b}%lu{-}{0}\n", l->move_count);
+	if (!l->options[1])
+		ft_printf("\n{red}>> MOVES COUNT: {b}%lu{-}{0}\n", l->move_count);
 	kill_all_the_ants(a);
 }

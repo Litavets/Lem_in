@@ -70,17 +70,17 @@ void			reset_bfs(t_lemin *l)
 
 static void		bfs2(t_lemin *l, size_t j)
 {
-	static int	toggle = 0;
+	int		y;
 
+	y = 0;
+	while (l->paths[y + 1] && l->paths[y][0] != -1)
+		y++;
 	if (l->q[j] && l->q[j]->flag == end)
 	{
 		save_path(l);
-//			print_paths_nums(l);	////
-		if (l->paths[0][2] == l->end->num && !toggle)
-		{
+			print_paths_nums(l);	////
+		if (l->paths[y][2] == l->end->num)
 			delete_1step_way(l);
-			toggle = 1;
-		}
 		reset_bfs(l);
 		bfs(l);
 	}
