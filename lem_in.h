@@ -43,11 +43,12 @@ typedef struct				s_room
 ** options[1] -c hide moves count
 ** options[2] -d allow duplicate links
 ** options[3] -s allow self-links
+** options[4] -n allow negative coordinates
 */
 
 typedef struct				s_lemin
 {
-	char					options[4];
+	char					options[5];
 	int						ants;
 	uintmax_t				nrooms;
 	t_room					*rooms;

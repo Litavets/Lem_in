@@ -34,28 +34,55 @@ static void		check_duplicates(t_lemin *l, char *line)
 	del_arr(split);
 }
 
-int				validate_room(t_lemin *l, char *line)
+static int				validate_room2(t_lemin *l, char *str)
 {
 	int		i;
-	int		j;
+
+	i = 0;
+	if (str[i] == '-')
+	{
+		if (!l->options[4])
+			error("ERROR: Negative coordinates.\n[Option -n to allow]");
+		i++;
+	}
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i++]))
+			return (0);
+	}
+	return (1);
+}
+
+int				validate_room(t_lemin *l, char *line)
+{
+	char		**split;
+	int			i;
+	int			sp;
 
 	if (line[0] == 'L')
 		error("Invalid room name.");
 	i = 0;
-	while (line[i] && line[i] != ' ')
+	sp = 0;
+	while (line[i])
+	{
+		if (line[i] == ' ')
+			sp++;
 		i++;
-	if (i == 0 || line[i] == '\0')
+	}
+	if (sp != 2)
 		return (0);
-	j = i;
-	while (ft_isdigit(line[++i]))
-		;
-	if (i == j + 1 || line[i] != ' ')
+	split = ft_strsplit(line, ' ');
+	if (!split[0] || !split[1] || !split[2] || split[3])
+	{
+		del_arr(split);
 		return (0);
-	j = i;
-	while (ft_isdigit(line[++i]))
-		;
-	if (i == j + 1 || line[i] != '\0')
+	}
+	if (!validate_room2(l, split[1]) || !validate_room2(l, split[2]))
+	{
+		del_arr(split);
 		return (0);
+	}
+	del_arr(split);
 	check_duplicates(l, line);
 	return (1);
 }

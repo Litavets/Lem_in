@@ -6,7 +6,6 @@ AND TEST INPUT FROM TERMINAL!!!!
 
 AND ADD RELINKS TO MAKEFILE
 
-
 DUPLICATE LINKS -- option ON/OFF?
 SELF LINKS -- option ON/OFF?
 
@@ -17,6 +16,7 @@ minus coordinates?
 
 NO ERROR
 
+>> FIXED!
 
 100
 ##start

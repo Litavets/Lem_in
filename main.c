@@ -26,7 +26,7 @@ static	t_lemin		*init_lemin(void)
 
 	if (!(l = (t_lemin *)malloc(sizeof(t_lemin))))
 		return (NULL);
-	ft_bzero(l->options, 4);
+	ft_bzero(l->options, 5);
 	l->ants = 0;
 	l->nrooms = 0;
 	l->rooms = NULL;
@@ -73,39 +73,39 @@ void				options(t_lemin *l, int ac, char *av[])
 	int			i;
 
 	i = 1;
-	if (ac > 1)
+	while (i < ac)
 	{
-		while (i < ac)
+		if (!ft_strcmp(av[i], "-p"))
+			l->options[0] = 'p';
+		else if (!ft_strcmp(av[i], "-c"))
+			l->options[1] = 'c';
+		else if (!ft_strcmp(av[i], "-d"))
+			l->options[2] = 'd';
+		else if (!ft_strcmp(av[i], "-s"))
+			l->options[3] = 's';
+		else if (!ft_strcmp(av[i], "-n"))
+			l->options[4] = 'n';
+		else
 		{
-			if (!ft_strcmp(av[i], "-p"))
-				l->options[0] = 'p';
-			else if (!ft_strcmp(av[i], "-c"))
-				l->options[1] = 'c';
-			else if (!ft_strcmp(av[i], "-d"))
-				l->options[2] = 'd';
-			else if (!ft_strcmp(av[i], "-s"))
-				l->options[3] = 's';
-			else
-			{
-				ft_printf("{I}OPTIONS:{0}\n");
-				ft_printf("-p	hide discovered paths\n-c	hide moves count\n");
-				ft_printf("-d	allow duplicate links\n-s	allow self-links\n");
-				error("\nERROR: invalid option.");
-			}
-			i++;
+			ft_printf("{I}OPTIONS:{0}\n-p	hide discovered paths\n");
+			ft_printf("-c	hide moves count\n-d	allow duplicate links\n");
+			ft_printf("-s	allow self-links\n-n	allow negative coordinates");
+			error("\nERROR: invalid option.");
 		}
+		i++;
 	}
 }
-
+//int					main(void)
 int					main(int ac, char *av[])
 {
-//		FILE 	*fp = freopen("./test", "r", stdin);  //
+		FILE 	*fp = freopen("./test", "r", stdin);  //
 	char		*line;
 	t_lemin		*l;
 	int			ret;
 
 	l = init_lemin();
-	options(l, ac, av);
+	if (ac > 1)
+		options(l, ac, av);
 	while ((ret = get_next_line(0, &line)) > 0)
 	{
 		if (validate_ants(l, line))
@@ -123,7 +123,7 @@ int					main(int ac, char *av[])
 	}
 	more_errors(l, ret);
 	solve(l);
-//		fclose(fp);  //
+		fclose(fp);  //
 		printf("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 		system("leaks -q lem-in");
 	return (0);
