@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "../inc/lem_in.h"
 
 static void		remove_adj_node(t_lemin *l, t_adjlist **adj, int f)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "../inc/lem_in.h"
 
 /*
 **	char c == [S - start, F - Finsih, 1 - finish in 1 step, M - Midway]
