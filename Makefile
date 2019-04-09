@@ -16,10 +16,12 @@ FLAGS = -g -Wall -Wextra -Werror
 HEAD = ./lem_in.h
 SRC =	main.c \
 		parse.c \
+		validate.c \
 		rooms_list.c \
 		adj_list.c \
 		adj_list2.c \
 		bfs.c \
+		bfs2.c \
 		print_paths.c \
 		ants_gogogo.c \
 		ants_gogogo2.c \

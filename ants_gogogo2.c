@@ -13,7 +13,7 @@
 #include "lem_in.h"
 
 /*
-**	char c == [S - start, F - Finsih, M - Midway]
+**	char c == [S - start, F - Finsih, 1 - finish in 1 step, M - Midway]
 */
 
 void				print_move(t_lemin *l, t_ants *a, char c)

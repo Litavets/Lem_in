@@ -78,7 +78,6 @@ static void		bfs2(t_lemin *l, size_t j)
 	if (l->q[j] && l->q[j]->flag == end)
 	{
 		save_path(l);
-//			print_paths_nums(l);	////
 		if (l->paths[y][2] == l->end->num)
 			delete_1step_way(l);
 		reset_bfs(l);

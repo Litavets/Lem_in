@@ -12,14 +12,6 @@
 
 #include "lem_in.h"
 
-void				error(char *str)
-{
-	ft_printf("{red}{b}%s{0}\n", str);
-		printf("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-		system("leaks -q lem-in");
-	exit(0);
-}
-
 static	t_lemin		*init_lemin(void)
 {
 	t_lemin		*l;
@@ -41,14 +33,12 @@ static	t_lemin		*init_lemin(void)
 static void			solve(t_lemin *l)
 {
 	link_adjlist(l);
-	create_paths_arr_and_q(l);
-//		delete_1step_way(l);		///
-//		print_rooms_list(l->rooms);  ///
+	create_paths_arr(l);
+	create_q(l);
 	bfs(l);
 	if (!l->options[0])
 		print_paths(l);
 	ants_gogogo(l);
-//		print_rooms_list(l->rooms);  ///
 	clean_rooms(l);
 	clean_lemin_struct(l);
 }
@@ -89,12 +79,14 @@ void				options(t_lemin *l, int ac, char *av[])
 		{
 			ft_printf("{I}OPTIONS:{0}\n-p	hide discovered paths\n");
 			ft_printf("-c	hide moves count\n-d	allow duplicate links\n");
-			ft_printf("-s	allow self-links\n-n	allow negative coordinates");
-			error("\nERROR: invalid option.");
+			ft_printf("-s	allow self-links\n");
+			ft_printf("-n	allow negative coordinates\n");
+			error("ERROR: invalid option.");
 		}
 		i++;
 	}
 }
+
 //int					main(void)
 int					main(int ac, char *av[])
 {

@@ -12,35 +12,72 @@
 
 #include "lem_in.h"
 
-void			create_paths_arr_and_q(t_lemin *l)
+static void		remove_adj_node(t_lemin *l, t_adjlist **adj, int f)
 {
-	size_t		y;
-	size_t		x;
-	size_t		ways;
+	t_adjlist	*tmp;
+	t_adjlist	*nxt;
 
-	if (!(l->q = (t_room **)malloc(sizeof(t_room *) * l->nrooms + 1)))
-		return ;
-	y = 0;
-	while (y < l->nrooms + 1)
-		l->q[y++] = NULL;
-	ways = (l->start->count <= l->end->count) ? l->start->count : l->end->count;
-	if (!ways)
-		error("ERROR: Start/end room has no links.");
-	if (!(l->paths = (int **)malloc(sizeof(int *) * ways + 1)))
-		return ;
-	y = 0;
-	while (y < ways)
+	tmp = *adj;
+	if (f)
 	{
-		l->paths[y] = (int *)malloc(sizeof(int *) * l->nrooms + 2);
-		while (x < l->nrooms + 2)
-		{
-			l->paths[y][x] = -1;
-			x++;
-		}
-		x = 0;
-		y++;
+		*adj = (*adj)->next;
+		ft_strdel(&tmp->dest);
+		ft_bzero((void *)tmp, sizeof(tmp));
+		free(tmp);
+		(f == 1) ? (l->start->adj = *adj) :
+			(l->end->adj = *adj);
 	}
-	l->paths[y] = NULL;
+	else
+	{
+		nxt = tmp->next->next;
+		ft_strdel(&tmp->next->dest);
+		ft_bzero((void *)tmp->next, sizeof(tmp->next));
+		free(tmp->next);
+		(*adj)->next = nxt;
+	}
+}
+
+static void		delete_1step_way2(t_lemin *l)
+{
+	t_adjlist	*adj;
+
+	adj = l->end->adj;
+	if (adj->dst == l->start->num)
+		remove_adj_node(l, &adj, 2);
+	else
+	{
+		while (adj && adj->next)
+		{
+			if (adj->next->dst == l->start->num)
+			{
+				remove_adj_node(l, &adj, 0);
+				break ;
+			}
+			adj = adj->next;
+		}
+	}
+}
+
+void			delete_1step_way(t_lemin *l)
+{
+	t_adjlist	*adj;
+
+	adj = l->start->adj;
+	if (adj->dst == l->end->num)
+		remove_adj_node(l, &adj, 1);
+	else
+	{
+		while (adj && adj->next)
+		{
+			if (adj->next->dst == l->end->num)
+			{
+				remove_adj_node(l, &adj, 0);
+				break ;
+			}
+			adj = adj->next;
+		}
+	}
+	delete_1step_way2(l);
 }
 
 static t_room	*get_link(t_lemin *l, int rnum)

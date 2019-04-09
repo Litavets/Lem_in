@@ -79,7 +79,8 @@ void						addlink(t_lemin *l, char *line);
 
 void						count_rooms(t_lemin *l);
 void						link_adjlist(t_lemin *l);
-void						create_paths_arr_and_q(t_lemin *l);
+void						create_paths_arr(t_lemin *l);
+void						create_q(t_lemin *l);
 
 void						bfs(t_lemin *l);
 t_ants						*make_ants_list(t_lemin *l);
@@ -94,11 +95,5 @@ void						del_arr(char **arr);
 void						clean_rooms(t_lemin *l);
 void						clean_lemin_struct(t_lemin *l);
 void						kill_all_the_ants(t_ants *a);
-
-///////////TO DELETE
-void						print_rooms_list(t_room *rooms);
-void						print_struct_lemin(t_lemin *l);
-void						print_paths_nums(t_lemin *l);
-void						print_ants(t_ants	*a);
 
 #endif
