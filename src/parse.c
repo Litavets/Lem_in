@@ -37,7 +37,7 @@ int				parse_ants(t_lemin *l, char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (!ft_isdigit(line[i]) && line[i] != '\n')
+		if (!ft_isdigit(line[i]))
 		{
 			ft_strdel(&line);
 			error("ERROR: Invalid ants number.");
@@ -49,6 +49,12 @@ int				parse_ants(t_lemin *l, char *line)
 	{
 		ft_strdel(&line);
 		error("ERROR: Invalid ants number.");
+	}
+	if (ants > 100000000 && !l->options[5])
+	{
+		ft_printf("{red}{b}ERROR: Life's too short for so many ants.\n");
+		ft_printf("[100mln max. You can extend the limit with -a option.{0}");
+		error("\nBut DON'T! Your mom wouldn't like it!]");
 	}
 	if (l->ants != 0)
 		error("ERROR: Multiple ants input. Shame on you!");

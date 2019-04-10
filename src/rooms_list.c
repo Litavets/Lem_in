@@ -39,11 +39,33 @@ static char		*parse_room_name(char *line)
 
 static void		get_room_coord(t_room *new, char *line)
 {
-	char	**split;
+	char			**split;
+	static char		*imax = "2147483647";
+	static char		*imin = "-2147483648";
 
 	split = ft_strsplit(line, ' ');
+	if ((split[1][0] != '-' && ft_strlen(split[1]) > 10) ||
+		(split[1][0] == '-' && ft_strlen(split[1]) > 11) ||
+		(split[2][0] != '-' && ft_strlen(split[2]) > 10) || 
+		(split[2][0] == '-' && ft_strlen(split[2]) > 11))
+		error("ERROR: room coordinates have to be ints.");
+	if (ft_strlen(split[1]) >= 10)
+	{
+		if ((split[1][0] != '-') && (ft_strcmp(split[1], imax) > 0))
+			error("ERROR: room coordinates have to be ints.");
+		if ((split[1][0] == '-') && (ft_strcmp(split[1], imin) > 0))
+			error("ERROR: room coordinates have to be ints.");
+	}
+	if (ft_strlen(split[2]) >= 10)
+	{
+		if ((split[2][0] != '-') && (ft_strcmp(split[2], imax) > 0))
+			error("ERROR: room coordinates have to be ints.");
+		if ((split[2][0] == '-') && (ft_strcmp(split[2], imin) > 0))
+			error("ERROR: room coordinates have to be ints.");
+	}
 	new->x = ft_atoi(split[1]);
 	new->y = ft_atoi(split[2]);
+		printf("x:%d y:%d\n", new->x, new->y);	//
 	del_arr(split);
 }
 

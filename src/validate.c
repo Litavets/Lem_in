@@ -52,6 +52,8 @@ static int				validate_room2(t_lemin *l, char *str)
 		if (!l->options[4])
 			error("ERROR: Negative coordinates.\n[Option -n to allow]");
 		i++;
+		if (!str[i])
+			return (0);
 	}
 	while (str[i])
 	{

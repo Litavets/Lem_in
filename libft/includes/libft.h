@@ -20,6 +20,7 @@
 # include <limits.h>
 # include <stdio.h>
 
+# include "get_next_line.h"
 # include "ft_printf.h"
 
 /*
@@ -107,6 +108,5 @@ int					ft_sqrt(int nb);
 /*
 ** Part 5 - Next projects
 */
-int					get_next_line(const int fd, char **line);
 
 #endif

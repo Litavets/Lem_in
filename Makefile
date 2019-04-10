@@ -48,7 +48,7 @@ $(OBJ): | $(OBJ_DIR)
 $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
 
-$(OBJ_DIR)%.o: %.c
+$(OBJ_DIR)%.o: %.c $(INC_DIR)lem_in.h
 	@$(CC) $(FLAGS) -c $< -o $@ -I $(INC_DIR) -I $(LIB_INC)
 	@echo "	\033[96m$@\033[0m"
 

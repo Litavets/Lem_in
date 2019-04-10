@@ -44,11 +44,12 @@ typedef struct				s_room
 ** options[2] -d allow duplicate links
 ** options[3] -s allow self-links
 ** options[4] -n allow negative coordinates
+** options[5] -a extend ants limit to max int
 */
 
 typedef struct				s_lemin
 {
-	char					options[5];
+	char					options[6];
 	int						ants;
 	uintmax_t				nrooms;
 	t_room					*rooms;

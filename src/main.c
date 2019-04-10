@@ -18,7 +18,7 @@ static	t_lemin		*init_lemin(void)
 
 	if (!(l = (t_lemin *)malloc(sizeof(t_lemin))))
 		return (NULL);
-	ft_bzero(l->options, 5);
+	ft_bzero(l->options, 6);
 	l->ants = 0;
 	l->nrooms = 0;
 	l->rooms = NULL;
@@ -75,12 +75,15 @@ void				options(t_lemin *l, int ac, char *av[])
 			l->options[3] = 's';
 		else if (!ft_strcmp(av[i], "-n"))
 			l->options[4] = 'n';
+		else if (!ft_strcmp(av[i], "-a"))
+			l->options[5] = 'a';
 		else
 		{
 			ft_printf("{I}OPTIONS:{0}\n-p	hide discovered paths\n");
 			ft_printf("-c	hide moves count\n-d	allow duplicate links\n");
 			ft_printf("-s	allow self-links\n");
 			ft_printf("-n	allow negative coordinates\n");
+			ft_printf("-a	extend ants limit to max int (NOT RECOMMENDED)\n");
 			error("ERROR: invalid option.");
 		}
 		i++;
@@ -90,7 +93,7 @@ void				options(t_lemin *l, int ac, char *av[])
 //int					main(void)
 int					main(int ac, char *av[])
 {
-		FILE 	*fp = freopen("./test", "r", stdin);  //
+//		FILE 	*fp = freopen("./test", "r", stdin);  //
 	char		*line;
 	t_lemin		*l;
 	int			ret;
@@ -115,7 +118,7 @@ int					main(int ac, char *av[])
 	}
 	more_errors(l, ret);
 	solve(l);
-		fclose(fp);  //
+//		fclose(fp);  //
 		printf("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 		system("leaks -q lem-in");
 	return (0);
