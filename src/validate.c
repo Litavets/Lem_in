@@ -12,11 +12,9 @@
 
 #include "../inc/lem_in.h"
 
-void				error(char *str)
+void			error(char *str)
 {
 	ft_printf("{red}{b}%s{0}\n", str);
-		printf("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");	//
-		system("leaks -q lem-in");	//
 	exit(0);
 }
 
@@ -42,7 +40,7 @@ static void		check_duplicates(t_lemin *l, char *line)
 	del_arr(split);
 }
 
-static int				validate_room2(t_lemin *l, char *str)
+static int		validate_room2(t_lemin *l, char *str)
 {
 	int		i;
 
@@ -63,7 +61,7 @@ static int				validate_room2(t_lemin *l, char *str)
 	return (1);
 }
 
-static int			count_spaces(char *line)
+static int		count_spaces(char *line)
 {
 	int			i;
 	int			sp;
@@ -85,6 +83,8 @@ int				validate_room(t_lemin *l, char *line)
 {
 	char		**split;
 
+	if (!l->ants)
+		return (0);
 	if (line[0] == 'L')
 		error("Invalid room name.");
 	if (!count_spaces(line))

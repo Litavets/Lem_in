@@ -12,6 +12,21 @@
 
 #include "../inc/lem_in.h"
 
+void			more_errors(t_lemin *l, int ret)
+{
+	if (ret < 0)
+		error("ERROR: Can't read the file.");
+	count_rooms(l);
+	if (l->nrooms == 0)
+		error("ERROR: Make some rooms for those lovely little ants!");
+	if (!l->start || !l->end)
+		error("ERROR: No start or end room.");
+	if (!l->ants)
+		error("ERROR: No ants - no fun!");
+	if (l->links_num == 0)
+		error("ERROR: Are you kidding? No links, dude.");
+}
+
 int				validate_ants(t_lemin *l, char *line)
 {
 	int		i;
@@ -33,17 +48,10 @@ int				parse_ants(t_lemin *l, char *line)
 	int			i;
 	intmax_t	ants;
 
+	if (l->ants != 0)
+		error("ERROR: Multiple ants input. Shame on you!");
 	ants = 0;
 	i = 0;
-	while (line[i])
-	{
-		if (!ft_isdigit(line[i]))
-		{
-			ft_strdel(&line);
-			error("ERROR: Invalid ants number.");
-		}
-		i++;
-	}
 	ants = ft_atoi(line);
 	if (ants <= 0 || ants > INT_MAX)
 	{
@@ -56,8 +64,6 @@ int				parse_ants(t_lemin *l, char *line)
 		ft_printf("[100mln max. You can extend the limit with -a option.{0}");
 		error("\nBut DON'T! Your mom wouldn't like it!]");
 	}
-	if (l->ants != 0)
-		error("ERROR: Multiple ants input. Shame on you!");
 	return ((size_t)ants);
 }
 
@@ -72,6 +78,8 @@ void			parse_comment(t_lemin *l, char **line)
 		flag = 2;
 	if (flag)
 	{
+		if (!l->ants)
+			error("ERROR: No ants - no fun!");
 		while (*line[0] == '#')
 		{
 			ft_putendl(*line);

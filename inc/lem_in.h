@@ -72,6 +72,7 @@ typedef struct				s_ants
 int							validate_ants(t_lemin *l, char	*line);
 int							parse_ants(t_lemin *l, char *line);
 void						parse_comment(t_lemin *l, char **line);
+void						more_errors(t_lemin *l, int ret);
 
 int							validate_room(t_lemin *l, char *line);
 void						addroom(t_lemin *l, char *line, int flag);

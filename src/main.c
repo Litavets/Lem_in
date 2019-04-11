@@ -43,19 +43,14 @@ static void			solve(t_lemin *l)
 	clean_lemin_struct(l);
 }
 
-static void			more_errors(t_lemin *l, int ret)
+static void			options2(void)
 {
-	if (ret < 0)
-		error("ERROR: Can't read the file.");
-	count_rooms(l);
-	if (l->nrooms == 0)
-		error("ERROR: Make some rooms for those lovely little ants!");
-	if (!l->start || !l->end)
-		error("ERROR: No start or end room.");
-	if (!l->ants)
-		error("ERROR: No ants - no fun!");
-	if (l->links_num == 0)
-		error("ERROR: Are you kidding? No links, dude.");
+	ft_printf("{I}OPTIONS:{0}\n-p	hide discovered paths\n");
+	ft_printf("-c	hide moves count\n-d	allow duplicate links\n");
+	ft_printf("-s	allow self-links\n");
+	ft_printf("-n	allow negative coordinates\n");
+	ft_printf("-a	extend ants limit to max int (NOT RECOMMENDED)\n");
+	error("ERROR: invalid option.");
 }
 
 void				options(t_lemin *l, int ac, char *av[])
@@ -78,22 +73,13 @@ void				options(t_lemin *l, int ac, char *av[])
 		else if (!ft_strcmp(av[i], "-a"))
 			l->options[5] = 'a';
 		else
-		{
-			ft_printf("{I}OPTIONS:{0}\n-p	hide discovered paths\n");
-			ft_printf("-c	hide moves count\n-d	allow duplicate links\n");
-			ft_printf("-s	allow self-links\n");
-			ft_printf("-n	allow negative coordinates\n");
-			ft_printf("-a	extend ants limit to max int (NOT RECOMMENDED)\n");
-			error("ERROR: invalid option.");
-		}
+			options2();
 		i++;
 	}
 }
 
-//int					main(void)
 int					main(int ac, char *av[])
 {
-//		FILE 	*fp = freopen("./test", "r", stdin);  //
 	char		*line;
 	t_lemin		*l;
 	int			ret;
@@ -118,8 +104,5 @@ int					main(int ac, char *av[])
 	}
 	more_errors(l, ret);
 	solve(l);
-//		fclose(fp);  //
-		printf("\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-		system("leaks -q lem-in");
 	return (0);
 }

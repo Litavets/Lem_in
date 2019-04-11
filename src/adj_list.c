@@ -59,6 +59,8 @@ void			addlink(t_lemin *l, char *line)
 	t_room				*cur;
 	static uintmax_t	links;
 
+	if (!l->ants || !l->rooms)
+		error("ERROR. Right order: 1)ants 2)rooms 3)links.");
 	split = ft_strsplit(line, '-');
 	cur = l->rooms;
 	while (cur)
@@ -97,6 +99,8 @@ int				validate_link(t_lemin *l, char *line)
 {
 	char		**split;
 
+	if (!l->ants || !l->rooms)
+		return (0);
 	if (!ft_strchr(line, '-') || ft_strchr(line, ' ') || ft_strchr(line, '	'))
 		return (0);
 	split = ft_strsplit(line, '-');
