@@ -66,7 +66,7 @@ void			addlink(t_lemin *l, char *line)
 	{
 		if (!ft_strcmp(cur->name, split[0]))
 			add_to_adjlist(l, cur, split[1]);
-		if (!ft_strcmp(cur->name, split[1]))
+		if (ft_strcmp(split[0], split[1]) && !ft_strcmp(cur->name, split[1]))
 			add_to_adjlist(l, cur, split[0]);
 		cur = cur->next;
 	}

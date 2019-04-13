@@ -37,13 +37,13 @@ void			create_paths_arr(t_lemin *l)
 	y = 0;
 	while (y < ways)
 	{
+		x = 0;
 		l->paths[y] = (int *)malloc(sizeof(int *) * l->nrooms + 2);
 		while (x < l->nrooms + 2)
 		{
 			l->paths[y][x] = -1;
 			x++;
 		}
-		x = 0;
 		y++;
 	}
 	l->paths[y] = NULL;

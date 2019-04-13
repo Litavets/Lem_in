@@ -16,13 +16,13 @@ void			more_errors(t_lemin *l, int ret)
 {
 	if (ret < 0)
 		error("ERROR: Can't read the file.");
+	if (!l->ants)
+		error("ERROR: No ants - no fun!");
 	count_rooms(l);
 	if (l->nrooms == 0)
 		error("ERROR: Make some rooms for those lovely little ants!");
 	if (!l->start || !l->end)
 		error("ERROR: No start or end room.");
-	if (!l->ants)
-		error("ERROR: No ants - no fun!");
 	if (l->links_flag == 0)
 		error("ERROR: Are you kidding? No links, dude.");
 }

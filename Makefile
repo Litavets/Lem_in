@@ -34,6 +34,7 @@ SRC 	=	main.c \
 			ants_gogogo.c \
 			ants_gogogo2.c \
 			cleaning.c \
+			debug.c 			############################
 
 OBJ 	= $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 

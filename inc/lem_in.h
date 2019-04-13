@@ -98,4 +98,9 @@ void						clean_rooms(t_lemin *l);
 void						clean_lemin_struct(t_lemin *l);
 void						kill_all_the_ants(t_ants *a);
 
+//	DEBUG
+void						print_rooms_list(t_room *rooms);
+void						print_struct_lemin(t_lemin *l);
+void						print_paths_nums(t_lemin *l);
+void						print_ants(t_ants	*a);
 #endif

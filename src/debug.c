@@ -41,7 +41,7 @@ void		print_paths_nums(t_lemin *l)
 	printf("\n.................................................\n");
 	while (l->paths[y])
 	{
-		while (x < l->nrooms + 1)
+		while (x < l->nrooms + 2)
 		{
 			printf(" % d|", l->paths[y][x]);
 			x++;
@@ -56,8 +56,8 @@ void		print_adjlist(t_adjlist *adj)
 {
 	while (adj)
 	{
-//		printf("{%s|%d]-", adj->dest, adj->dst);
-		printf("[%d|%s}-", adj->link->num, adj->link->name);
+		printf("[%d|%s}-", adj->dst,  adj->dest);
+//		printf("[%d|%s}-", adj->link->num, adj->link->name);
 		adj = adj->next;
 	}
 	printf("\n");
@@ -66,8 +66,10 @@ void		print_adjlist(t_adjlist *adj)
 void		print_rooms_list(t_room *rooms)
 {
 	t_room		*cur;
+	t_adjlist	*adj;
 
 	cur = rooms;
+	adj = cur->adj;
 	while (cur)
 	{
 		printf("==============================\n");

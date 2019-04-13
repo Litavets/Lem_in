@@ -1,15 +1,15 @@
-9
-start 0 0
-##end
-end 1666666666 2100000000
-start-end
-#sadasd
-#dfdfa
+#YOU IDIOT! YOU IDIOT! YOU IDIOT! YOU IDIOT! YOU IDIOT! YOU IDIOT!
+#DUPLICATE LINKS: ants can't go to the same room via duplicate corridors!
+5
 ##start
-#sadasd
-#dfdfa#sadasd
-#dfdfa#sadasd
-#dfdfa#sadasd
-#dfdfa
-5 5 5
-5-end
+0 0 0
+##end
+1 1 1
+2 2 2
+0-1
+2-2
+2-1
+2-0
+0-0
+1-1
+1-0
