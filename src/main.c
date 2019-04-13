@@ -27,6 +27,7 @@ static	t_lemin		*init_lemin(void)
 	l->q = NULL;
 	l->paths = NULL;
 	l->move_count = 0;
+	l->links_flag = 0;
 	return (l);
 }
 
@@ -77,16 +78,17 @@ void				options(t_lemin *l, int ac, char *av[])
 		i++;
 	}
 }
-
-int					main(int ac, char *av[])
+int			main(void)
+//int					main(int ac, char *av[])
 {
+		FILE *fp = freopen("test", "r", stdin);	///
 	char		*line;
 	t_lemin		*l;
 	int			ret;
 
 	l = init_lemin();
-	if (ac > 1)
-		options(l, ac, av);
+//	if (ac > 1)
+//		options(l, ac, av);
 	while ((ret = get_next_line(0, &line)) > 0)
 	{
 		if (validate_ants(l, line))
@@ -104,5 +106,6 @@ int					main(int ac, char *av[])
 	}
 	more_errors(l, ret);
 	solve(l);
+		fclose(fp);
 	return (0);
 }

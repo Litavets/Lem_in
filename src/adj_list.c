@@ -57,7 +57,6 @@ void			addlink(t_lemin *l, char *line)
 {
 	char				**split;
 	t_room				*cur;
-	static uintmax_t	links;
 
 	if (!l->ants || !l->rooms)
 		error("ERROR. Right order: 1)ants 2)rooms 3)links.");
@@ -72,9 +71,8 @@ void			addlink(t_lemin *l, char *line)
 		cur = cur->next;
 	}
 	del_arr(split);
-	links = 0;
-	links++;
-	l->links_num = links;
+	if (!l->links_flag)
+		l->links_flag++;
 }
 
 static void		validate_link2(t_lemin *l, char *split0, char *split1)

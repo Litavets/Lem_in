@@ -58,7 +58,7 @@ typedef struct				s_lemin
 	t_room					**q;
 	int						**paths;
 	uintmax_t				move_count;
-	uintmax_t				links_num;
+	char					links_flag;
 }							t_lemin;
 
 typedef struct				s_ants

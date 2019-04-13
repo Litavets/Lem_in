@@ -23,7 +23,7 @@ void			more_errors(t_lemin *l, int ret)
 		error("ERROR: No start or end room.");
 	if (!l->ants)
 		error("ERROR: No ants - no fun!");
-	if (l->links_num == 0)
+	if (l->links_flag == 0)
 		error("ERROR: Are you kidding? No links, dude.");
 }
 
@@ -80,13 +80,14 @@ void			parse_comment(t_lemin *l, char **line)
 	{
 		if (!l->ants)
 			error("ERROR: No ants - no fun!");
-		while (*line[0] == '#')
+		while (line && *line[0] == '#')
 		{
 			ft_putendl(*line);
 			ft_strdel(*&line);
 			get_next_line(0, *&line);
-			((!ft_strcmp(*line, "##start")) || (!ft_strcmp(*line, "##end")))
-				? error("ERROR: Start/end flags are messed up!") : 0;
+			(!*line || (!ft_strcmp(*line, "##start"))
+				|| (!ft_strcmp(*line, "##end"))) ?
+				error("ERROR: Start/end flags are messed up!") : 0;
 		}
 		(validate_room(l, *line)) ? addroom(l, *line, flag) :
 			error("ERROR: Invalid room input. Ants hate this!");
