@@ -25,6 +25,7 @@ LIB_INC	= $(LIB_DIR)includes/
 SRC 	=	main.c \
 			parse.c \
 			validate.c \
+			validate2.c \
 			rooms_list.c \
 			adj_list.c \
 			adj_list2.c \

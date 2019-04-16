@@ -12,6 +12,18 @@
 
 #include "../inc/lem_in.h"
 
+static int		duplicate_links(t_lemin *l, int link, int newlink)
+{
+	if (link == newlink)
+	{
+		if (!l->options[2])
+			error("ERROR: Duplicate links.\n[Allow with -d option]");
+		else
+			return (1);
+	}
+	return (0);
+}
+
 static int		get_room_num(t_lemin *l, char *dest)
 {
 	t_room		*cur;
@@ -41,12 +53,12 @@ static void		add_to_adjlist(t_lemin *l, t_room *cur, char *dest)
 		cur->adj = newadj;
 	else
 	{
-		if ((adj->dst == newadj->dst) && !l->options[2])
-			error("ERROR: Duplicate links.\n[Allow with -d option]");
+		if (duplicate_links(l, adj->dst, newadj->dst))
+			return ;
 		while (adj->next)
 		{
-			if ((adj->dst == newadj->dst) && !l->options[2])
-				error("ERROR: Duplicate links.\n[Allow with -d option]");
+			if (duplicate_links(l, adj->dst, newadj->dst))
+				return ;
 			adj = adj->next;
 		}
 		adj->next = newadj;
@@ -73,47 +85,4 @@ void			addlink(t_lemin *l, char *line)
 	del_arr(split);
 	if (!l->links_flag)
 		l->links_flag++;
-}
-
-static void		validate_link2(t_lemin *l, char *split0, char *split1)
-{
-	t_room		*cur;
-	int			rooms_found[2];
-
-	cur = l->rooms;
-	rooms_found[0] = 0;
-	rooms_found[1] = 0;
-	while (cur)
-	{
-		(!ft_strcmp(split0, cur->name)) ? (rooms_found[0] = 1) : 0;
-		(!ft_strcmp(split1, cur->name)) ? (rooms_found[1] = 1) : 0;
-		cur = cur->next;
-	}
-	if (rooms_found[0] == 0 || rooms_found[1] == 0)
-		error("ERROR: link to a non-existent room.");
-}
-
-int				validate_link(t_lemin *l, char *line)
-{
-	char		**split;
-
-	if (!l->ants || !l->rooms)
-		return (0);
-	if (!ft_strchr(line, '-') || ft_strchr(line, ' ') || ft_strchr(line, '	'))
-		return (0);
-	split = ft_strsplit(line, '-');
-	if (split[2] != NULL)
-	{
-		del_arr(split);
-		return (0);
-	}
-	validate_link2(l, split[0], split[1]);
-	if (!ft_strcmp(split[0], split[1]) && !l->options[3])
-	{
-		ft_printf("{red}{b}ERROR: Don't link rooms with themselves,");
-		ft_printf(" you pervert!{0}\n");
-		error("[Allow with -s option]");
-	}
-	del_arr(split);
-	return (1);
 }
