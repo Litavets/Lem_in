@@ -107,13 +107,6 @@ void			ants_gogogo(t_lemin *l)
 		l->move_count++;
 	}
 	if (!l->options[1])
-	{
-		ft_printf("\n{cyan}{I}MOVES DIFFERENCE:{0} ");
-		(l->move_count <= l->moves_target) ? ft_printf("{green}") :
-			ft_printf("{red}");
-		ft_printf("{b}%+d{0}\n", l->move_count - l->moves_target);
-		ft_printf("{magenta}>> target: {b}%lu{-}{0}\n", l->moves_target);
-		ft_printf("{green}>> done  : {b}%lu{-}{0}\n", l->move_count);
-	}
+		print_moves_count(l);
 	kill_all_the_ants(a);
 }

@@ -12,6 +12,21 @@
 
 #include "../inc/lem_in.h"
 
+void				print_moves_count(t_lemin *l)
+{
+	if (l->moves_target)
+	{
+		ft_printf("\n{cyan}{I}MOVES DIFFERENCE:{0} ");
+		(l->move_count <= l->moves_target) ? ft_printf("{green}") :
+			ft_printf("{red}");
+		ft_printf("{b}%+d{0}\n", l->move_count - l->moves_target);
+		ft_printf("{magenta}>> target: {b}%lu{-}{0}\n", l->moves_target);
+		ft_printf("{green}>> done  : {b}%lu{-}{0}\n", l->move_count);
+	}
+	else
+		ft_printf("\n{red}>> MOVES COUNT: {b}%lu{-}{0}\n", l->move_count);
+}
+
 /*
 **	char c == [S - start, F - Finsih, 1 - finish in 1 step, M - Midway]
 */
