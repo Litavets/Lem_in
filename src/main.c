@@ -27,6 +27,7 @@ static	t_lemin		*init_lemin(void)
 	l->q = NULL;
 	l->paths = NULL;
 	l->move_count = 0;
+	l->moves_target = 0;
 	l->links_flag = 0;
 	return (l);
 }
@@ -34,14 +35,13 @@ static	t_lemin		*init_lemin(void)
 static void			solve(t_lemin *l)
 {
 	link_adjlist(l);
-		print_rooms_list(l->rooms);	///
 //		print_rooms_list(l->rooms);	///
 	create_paths_arr(l);
 	create_q(l);
 	bfs(l);
 	if (!l->options[0])
 		print_paths(l);
-		print_paths_nums(l);		///
+//		print_paths_nums(l);		///
 	ants_gogogo(l);
 	clean_rooms(l);
 	clean_lemin_struct(l);

@@ -67,6 +67,17 @@ int				parse_ants(t_lemin *l, char *line)
 	return ((size_t)ants);
 }
 
+static void		moves_required(t_lemin *l, char *line)
+{
+	char	*ptr;
+
+	if (l->moves_target)
+		return ;
+	ptr = ft_strchr(line, ':');
+	ptr += 2;
+	l->moves_target = ft_atoi(ptr);
+}
+
 void			parse_comment(t_lemin *l, char **line)
 {
 	int		flag;
@@ -76,6 +87,8 @@ void			parse_comment(t_lemin *l, char **line)
 		flag = 1;
 	else if (!ft_strcmp(*line, "##end"))
 		flag = 2;
+	else if (!ft_strncmp(*line, "#Here is the number of lines required:", 38))
+		moves_required(l, *line);
 	if (flag)
 	{
 		if (!l->ants)

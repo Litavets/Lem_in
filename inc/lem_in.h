@@ -57,7 +57,8 @@ typedef struct				s_lemin
 	t_room					*end;
 	t_room					**q;
 	int						**paths;
-	uintmax_t				move_count;
+	int						move_count;
+	int						moves_target;
 	char					links_flag;
 }							t_lemin;
 
