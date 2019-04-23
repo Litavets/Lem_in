@@ -35,13 +35,11 @@ static	t_lemin		*init_lemin(void)
 static void			solve(t_lemin *l)
 {
 	link_adjlist(l);
-//		print_rooms_list(l->rooms);	///
 	create_paths_arr(l);
 	create_q(l);
 	bfs(l);
 	if (!l->options[0])
 		print_paths(l);
-//		print_paths_nums(l);		///
 	ants_gogogo(l);
 	clean_rooms(l);
 	clean_lemin_struct(l);
@@ -82,10 +80,8 @@ void				options(t_lemin *l, int ac, char *av[])
 	}
 }
 
-//int			main(void)
 int					main(int ac, char *av[])
 {
-//		FILE *fp = freopen("test", "r", stdin);	///
 	char		*line;
 	t_lemin		*l;
 	int			ret;
@@ -93,8 +89,6 @@ int					main(int ac, char *av[])
 	l = init_lemin();
 	if (ac > 1)
 		options(l, ac, av);
-//			char	*av[2] = {"lem-in", "-s"};			//
-//			options(l, 2, av);							//
 	while ((ret = get_next_line(0, &line)) > 0)
 	{
 		if (validate_ants(l, line))
@@ -112,6 +106,5 @@ int					main(int ac, char *av[])
 	}
 	more_errors(l, ret);
 	solve(l);
-//		fclose(fp);
 	return (0);
 }
