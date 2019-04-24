@@ -90,7 +90,8 @@ int				validate_room(t_lemin *l, char *line)
 	if (!count_spaces(line))
 		return (0);
 	split = ft_strsplit(line, ' ');
-	if (!split[0] || !split[1] || !split[2] || split[3])
+	if (!split[0] || !split[1] || !split[2] || split[3]
+		|| ft_strchr(split[0], '-'))
 	{
 		del_arr(split);
 		return (0);

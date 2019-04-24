@@ -128,7 +128,6 @@ $(OBJ_DIR):
 	@mkdir $(OBJ_DIR)
 
 clean:
-#	@rm -f $(OBJ)
 	@rm -rf $(OBJ_DIR)
 	@echo "\033[31mLibft object files removed.\033[0m"
 
