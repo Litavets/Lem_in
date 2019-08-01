@@ -57,3 +57,13 @@ Or input the generator's output directly to the lem-in executable like this:
 I find all paths from start to end that don't overlap, because any room can be occupied by only one ant at a time. For that I use BFS (Breadth First Search) with a queue. First, I find the shortest route, exclude its rooms from the next searches, and then look for the second shortest route and so on. 
 
 When I have the list of routes, I move ants on them one by one. Depending on the number of ants and routes lengths, the program choses the best route for each ant.
+
+## Maps
+
+Maps have a very strict form and lem-in doesn't accept any deviations from it. A file should contain 3 sections in this order:
+
+1. Number of ants (positive integer)
+2. List of rooms in a form: `Name X Y` (X and Y are coordinates)
+3. List of links between roomsin a form `room1-room2`
+
+More on this in the subject [lem-in.en.pdf](https://github.com/dstepanets/Lem_in/blob/master/lem-in.en.pdf)
