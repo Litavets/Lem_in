@@ -18,7 +18,7 @@ Compile with `make`. Then run like this:
 
 `./lem-in [-p -c -d -s -n -a] < [map]`
 
-**Lem-in options:**
+#### Lem-in options:
 ```
 -p	hide discovered paths
 -c	hide moves count
@@ -40,7 +40,7 @@ Or input the generator's output directly to the lem-in executable like this:
 
 `./generator.dms --big | ./lem-in`
 
-Generator options:
+#### Generator options:
 ```
 --help : to read the manual
 --flow-one : generates an ant farm with distinctive path and [1] ant in it
