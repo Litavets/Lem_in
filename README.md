@@ -2,7 +2,7 @@
 
 [School 42] Finds optimal routes in a graph
 
-![](fdf_demo.gif)
+![](lem-in_demo.gif)
 
 ## Description
 
