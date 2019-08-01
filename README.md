@@ -18,7 +18,7 @@ Compile with `make`. Then run like this:
 
 `./lem-in [-p -c -d -s -n -a] < [map]`
 
-**Options:**
+**Lem-in options:**
 ```
 -p	hide discovered paths
 -c	hide moves count
@@ -29,25 +29,26 @@ Compile with `make`. Then run like this:
 ```
 Use test files in *_my_maps* directory.
 
-Or generate random maps by the provided _**generator.dms**_. You can either generate map in a file:
+Or generate random maps by the provided _**generator.dms**_. You can either generate map into a file:
 
 ```
 ./generator.dms --big > file
 ./lem-in < file
 ```
 
-Or input the generators output directly to the lem-in executable like this:
+Or input the generator's output directly to the lem-in executable like this:
 
 `./generator.dms --big | ./lem-in`
 
 Generator options:
-
-	- help : to read the manual
-	- flow-one : generates an ant farm with distinctive path and [1] ant in it
-	- flow-ten : generates an ant farm with distinctive path and approximately [10] ants in it
-	- flow-thousand : generates an ant farm with distinctive path and approximately [100] ants in it
-	- big : generates a big map (approximately [1000] rooms) to test the time complexity
-	- big-superposition : generates a big map with overlapping paths
+```
+--help : to read the manual
+--flow-one : generates an ant farm with distinctive path and [1] ant in it
+--flow-ten : generates an ant farm with distinctive path and approximately [10] ants in it
+--flow-thousand : generates an ant farm with distinctive path and approximately [100] ants in it
+--big : generates a big map (approximately [1000] rooms) to test the time complexity
+--big-superposition : generates a big map with overlapping paths
+```
 
 **Tested only on Mac OS X.**
 
