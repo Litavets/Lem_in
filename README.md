@@ -64,6 +64,6 @@ Maps have a very strict form and lem-in doesn't accept any deviations from it. A
 
 1. Number of ants (positive integer)
 2. List of rooms in a form: `Name X Y` (X and Y are coordinates)
-3. List of links between roomsin a form `room1-room2`
+3. List of links between rooms in a form `room1-room2`
 
 More on this in the subject [lem-in.en.pdf](https://github.com/dstepanets/Lem_in/blob/master/lem-in.en.pdf)
