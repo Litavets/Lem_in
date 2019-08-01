@@ -56,7 +56,4 @@ Or input the generator's output directly to the lem-in executable like this:
 
 I find all paths from start to end that don't overlap, because any room can be occupied by only one ant at a time. For that I use BFS (Breadth First Search) with a queue. First, I find the shortest route, exclude its rooms from the next searches, and then look for the second shortest route and so on. 
 
-When having the list of routes I move ants on them one by one, starting from the shortest path. Depending on the number of ants and routes lengths, the program choses the best rout for each ant.
-
-## Features
-
+When I have the list of routes, I move ants on them one by one. Depending on the number of ants and routes lengths, the program choses the best route for each ant.
