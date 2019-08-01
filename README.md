@@ -1,32 +1,61 @@
 # Lem_in
 
-[School 42] Finds optimal routes in a graph
+Program that finds optimal routes in a graph.
 
 ![](lem-in_demo.gif)
 
 ## Description
 
-3D graphics program. Draws a wireframe model of a relief landscape. Takes as input a map in form of a text document where space separated integers represent vertices of a model. The integer's position defines Y and X coordinate, and its value is for Z coordinate.
+Algorithmic project on graph theory. It's something like a logistics planner for an ant farm  :) The goal is to move a random number of ants in a labyrinth from the *Start* room to the *End* room in a minimum number of moves.
 
-*This is the first project in the graphics branch of School 42 curriculum.*
+*This is the project of the Algorithms branch of School 42 curriculum.*
 
-**Detailed description of the task is in [fdf.en.pdf](https://github.com/dstepanets/FdF/blob/master/fdf.en.pdf)**
+**Detailed description of the task: [lem-in.en.pdf](https://github.com/dstepanets/Lem_in/blob/master/lem-in.en.pdf)**
 
 ## Usage
 
-Compile with `make`. Then run:
+Compile with `make`. Then run like this:
 
-`./fdf [map.fdf]`
+`./lem-in [-p -c -d -s -n -a] < [map]`
 
-Use files in the *maps* directory.
+**Options:**
+```
+-p	hide discovered paths
+-c	hide moves count
+-d	allow duplicate links
+-s	allow self-links
+-n	allow negative coordinates
+-a	extend ants limit to max int (NOT RECOMMENDED)
+```
+Use test files in *_my_maps* directory.
+
+Or generate random maps by the provided _**generator.dms**_. You can either generate map in a file:
+
+```
+./generator.dms --big > file
+./lem-in < file
+```
+
+Or input the generators output directly to the lem-in executable like this:
+
+`./generator.dms --big | ./lem-in`
+
+Generator options:
+
+	- help : to read the manual
+	- flow-one : generates an ant farm with distinctive path and [1] ant in it
+	- flow-ten : generates an ant farm with distinctive path and approximately [10] ants in it
+	- flow-thousand : generates an ant farm with distinctive path and approximately [100] ants in it
+	- big : generates a big map (approximately [1000] rooms) to test the time complexity
+	- big-superposition : generates a big map with overlapping paths
 
 **Tested only on Mac OS X.**
 
+## Algorithm
+
+I find all paths from start to end that don't overlap, because any room can be occupied by only one ant at a time. For that I use BFS (Breadth First Search) with a queue. First, I find the shortest route, exclude its rooms from the next searches, and then look for the second shortest route and so on. 
+
+When having the list of routes I move ants on them one by one, starting from the shortest path. Depending on the number of ants and routes lengths, the program choses the best rout for each ant.
+
 ## Features
 
-- scroll
-- zoom
-- rotation (manual and auto)
-- color gradient relative to altitude
-- iso and parallel projections switch
-- relief sharpness modification (Z coordinate scaling)
