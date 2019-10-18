@@ -1,6 +1,6 @@
 # Lem_in
 
-Program that finds optimal routes in a graph.
+The program that finds optimal routes in a graph.
 
 ![](lem-in_demo.gif)
 
@@ -20,12 +20,12 @@ Compile with `make`. Then run like this:
 
 #### Lem-in options:
 ```
--p	hide discovered paths
--c	hide moves count
--d	allow duplicate links
--s	allow self-links
--n	allow negative coordinates
--a	extend ants limit to max int (NOT RECOMMENDED)
+-p    hide discovered paths
+-c    hide moves count
+-d    allow duplicate links
+-s    allow self-links
+-n    allow negative coordinates
+-a    extend ants limit to max int (NOT RECOMMENDED)
 ```
 Use test files in *_my_maps* directory.
 
@@ -44,8 +44,8 @@ Or input the generator's output directly to the lem-in executable like this:
 ```
 --help : to read the manual
 --flow-one : generates an ant farm with distinctive path and [1] ant in it
---flow-ten : generates an ant farm with distinctive path and approximately [10] ants in it
---flow-thousand : generates an ant farm with distinctive path and approximately [100] ants in it
+--flow-ten : generates an ant farm with a distinctive path and approximately [10] ants in it
+--flow-thousand : generates an ant farm with a distinctive path and approximately [100] ants in it
 --big : generates a big map (approximately [1000] rooms) to test the time complexity
 --big-superposition : generates a big map with overlapping paths
 ```
@@ -54,15 +54,15 @@ Or input the generator's output directly to the lem-in executable like this:
 
 ## Algorithm
 
-I find all paths from start to end that don't overlap, because any room can be occupied by only one ant at a time. For that I use BFS (Breadth First Search) with a queue. First, I find the shortest route, exclude its rooms from the next searches, and then look for the second shortest route and so on. 
+I find all paths from start to end that don't overlap, because any room can be occupied by only one ant at a time. For that, I use BFS (Breadth-First Search) with a queue. First, I find the shortest route, exclude its rooms from the next searches, and then look for the second shortest route and so on. 
 
-When I have the list of routes, I move ants on them one by one. Depending on the number of ants and routes lengths, the program choses the best route for each ant.
+When I have the list of routes, I move ants on them one by one. Depending on the number of ants and routes lengths, the program chooses the best route for each ant.
 
 ## Maps
 
 Maps have a very strict form and lem-in doesn't accept any deviations from it. A file should contain 3 sections in this order:
 
-1. Number of ants (positive integer)
+1. Number of ants (a positive integer)
 2. List of rooms in a form: `Name X Y` (X and Y are coordinates)
 3. List of links between rooms in a form `room1-room2`
 
